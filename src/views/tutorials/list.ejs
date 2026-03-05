@@ -1,0 +1,13 @@
+<%- include('../partials/header') %>
+<main>
+    <h1>Our Tutorials</h1>
+
+    <div class="tutorial-list">
+        <% Object.values(tutorials).forEach(tutorial => { %>
+            <div class="tutorial-card">
+                <h2><a href="/tutorials/<%= tutorial.slug %>"><%= tutorial.title %></a></h2>
+            </div>
+        <% }); %>
+    </div>
+</main>
+<%- include('../partials/footer') %>

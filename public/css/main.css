@@ -68,6 +68,10 @@ body {
             }
         }
     }
+
+    &.text {
+        white-space: break-space;
+    }
 }
 
 a, h1, h2 {

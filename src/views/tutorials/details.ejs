@@ -7,9 +7,11 @@
     </div>
 
     <div class="tutorial-content">
-        <p class="text">
-            <%= tutorial.textContent %>
-        </p>
+        <% paragraphs.forEach(paragraph => { %>
+            <p class="paragraph">
+                <%= paragraph %>
+            </p>
+        <% }); %>
     </div>
 </main>
 <%- include('../partials/footer') %>

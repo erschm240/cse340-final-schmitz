@@ -1,4 +1,4 @@
-import { getAllTutorials, getTutorialBySlug } from '../../models/tutorials/tutorials.js';
+import { getAllTutorials, getTutorialBySlug, separateTutorialParagraphs } from '../../models/tutorials/tutorials.js';
 
 // Route handler for tutorial list page
 const tutorialListPage = (req, res) => {
@@ -12,7 +12,11 @@ const tutorialListPage = (req, res) => {
 // Route handler for tutorial details page
 const tutorialDetailPage = (req, res, next) => {
     const tutorialSlug = req.params.tutorialSlug;
+
     const tutorial = getTutorialBySlug(tutorialSlug);
+
+    const tutorialParagraphs = separateTutorialParagraphs(tutorialSlug);
+
     // If the tutorial doesn't exist
     if (!tutorial) {
         const err = new Error(`Tutorial ${tutorialSlug} not found`);
@@ -22,7 +26,8 @@ const tutorialDetailPage = (req, res, next) => {
 
     res.render('tutorials/details', {
         title: tutorial.title,
-        tutorial: {...tutorial}
+        tutorial: {...tutorial},
+        paragraphs: tutorialParagraphs
     });
 };
 

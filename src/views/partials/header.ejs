@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/tutorial.css">
     <% if (NODE_ENV.includes('dev')) { %>
     <script>
         // Get the current hostname and port from the browser
@@ -25,6 +26,10 @@
 <body>
     <header>
         <nav>
+            <a href="/" class="logo-link" title="Back to home">
+                <img src="/images/final-project-logo.svg" alt="Link to the site homepage">
+                <span class="logo-text">The Knit and Crochet Guide</span>
+            </a>
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/tutorials">Tutorials</a></li>

@@ -6,6 +6,7 @@
         <% Object.values(tutorials).forEach(tutorial => { %>
             <div class="tutorial-card">
                 <h2><a href="/tutorials/<%= tutorial.slug %>"><%= tutorial.title %></a></h2>
+                <p><%= tutorial.description %></p>
             </div>
         <% }); %>
     </div>

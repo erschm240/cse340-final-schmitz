@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Crete+Round:ital@0;1&family=Indie+Flower&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    /* Color Palette */
+    --light-purple: #e4bbff;
+    --medium-purple: #c092dd;
+    --dark-purple: #603c77;
+    --dark-gray: #2f2f2f;
+    --off-white: #fbf9f9;
+
+    /* Fonts */
+    --header-font: 'Crete Round', 'Georgia', 'Times New Roman', 'serif';
+    --paragraph-font: 'Montserrat', 'Helvetica', 'sans-serif';
+    --logo-font: 'Indie Flower', 'Georgia', 'Times New Roman', 'serif';
+
+    /* Flash Message Colors */
+    --success-bg: #d4edda;
+    --success-border: #28a745;
+    --success-text: #155724;
+    --error-bg: #f8d7da;
+    --error-border: #dc3545;
+    --error-text: #721c24;
+    --warning-bg: #fff3cd;
+    --warning-border: #ffc107;
+    --warning-text: #856404;
+    --info-bg: #d1ecf1;
+    --info-border: #17a2b8;
+    --info-text: #0c5460;
+}

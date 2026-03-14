@@ -94,11 +94,4 @@ const getTutorialBySlug = (tutorialSlug) => {
     return tutorials[tutorialSlug] || null;
 };
 
-// const separateTutorialParagraphs = (tutorialSlug) => {
-//     const tutorial = getTutorialBySlug(tutorialSlug);
-
-//     const paragraphs = tutorial.textContent.split('\n');
-//     return paragraphs;
-// };
-
 export { getAllTutorials, getTutorialBySlug };

@@ -3,6 +3,7 @@ import { getAllTutorials, getTutorialBySlug } from '../../models/tutorials/tutor
 // Route handler for tutorial list page
 const tutorialListPage = (req, res) => {
     const tutorials = getAllTutorials();
+    
     res.render('tutorials/list', {
         title: 'Tutorials',
         tutorials: tutorials
@@ -10,12 +11,10 @@ const tutorialListPage = (req, res) => {
 }
 
 // Route handler for tutorial details page
-const tutorialDetailPage = (req, res, next) => {
+const tutorialDetailsPage = (req, res, next) => {
     const tutorialSlug = req.params.tutorialSlug;
 
     const tutorial = getTutorialBySlug(tutorialSlug);
-
-    // const tutorialParagraphs = separateTutorialParagraphs(tutorialSlug);
 
     // If the tutorial doesn't exist
     if (!tutorial) {
@@ -26,9 +25,8 @@ const tutorialDetailPage = (req, res, next) => {
 
     res.render('tutorials/details', {
         title: tutorial.title,
-        tutorial: {...tutorial},
-        // paragraphs: tutorialParagraphs
+        tutorial: {...tutorial}
     });
 };
 
-export { tutorialListPage, tutorialDetailPage };
+export { tutorialListPage, tutorialDetailsPage };

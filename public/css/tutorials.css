@@ -1,0 +1,100 @@
+@import 'variables.css';
+
+/* List styling */
+h1 {
+    text-align: center;
+}
+
+.tutorial-list {
+    display: grid;
+    gap: 2rem;
+    margin: 20px;
+    justify-self: center;
+
+    .tutorial-card {
+        padding: 20px;
+        display: flex;
+        background-color: var(--light-purple);
+        border: 2px solid var(--dark-purple);
+        border-radius: 8px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        /* Hover effect styles only to be used if the entire card is a link, haven't decided yet */
+        /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease-in-out;
+
+        &:hover {
+            transform: scale(1.01);
+        } */
+
+        .hero-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            align-self: center;
+            border-radius: 8px;
+        }
+        a {
+            color: var(--dark-gray);
+            text-decoration: none;
+
+            &:hover {
+                color: var(--dark-purple);
+            }
+        }
+    }
+}
+
+/* Details styling */
+
+.tutorial-header {
+    text-align: center;
+}
+
+.tutorial-content {
+    margin: 30px;
+
+    .tutorial-step {
+        margin: 30px 0;
+    }
+
+    h3 {
+        text-align: center;
+        font-size: 1.7em;
+    }
+
+    .step-img {
+        width: 80%;
+        display: flex;
+        justify-self: center;
+        margin-top: 30px;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .tutorial-list {
+        max-width: 1000px;
+            
+        .tutorial-card {
+            flex-direction: row !important;
+            
+            .hero-img {
+                margin: 20px;
+            }
+
+            .card-details {
+                display: flex;
+                flex-direction: column;
+                align-self: center;
+                text-align: left !important;
+            }
+        }
+    }
+
+    .tutorial-content {
+        display: grid;
+        justify-self: center;
+        max-width: 1000px;
+    }
+}

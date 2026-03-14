@@ -1,12 +1,15 @@
 <%- include('../partials/header') %>
 <main>
-    <h1>Our Tutorials</h1>
+    <h1><%= title %></h1>
 
     <div class="tutorial-list">
         <% Object.values(tutorials).forEach(tutorial => { %>
             <div class="tutorial-card">
-                <h2><a href="/tutorials/<%= tutorial.slug %>"><%= tutorial.title %></a></h2>
-                <p><%= tutorial.description %></p>
+                <img src="/images/<%= tutorial.slug %>/hero.jpg" class="hero-img" alt="Hero image for the <%= tutorial.slug %> tutorial">
+                <div class="card-details">
+                    <h2><a href="/tutorials/<%= tutorial.slug %>"><%= tutorial.title %></a></h2>
+                    <p><%= tutorial.description %></p>
+                </div>
             </div>
         <% }); %>
     </div>

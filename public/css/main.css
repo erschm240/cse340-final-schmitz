@@ -62,7 +62,7 @@ body {
     }
 }
 
-a, h1, h2 {
+a, h1, h2, h3 {
     font-family: var(--header-font);
     color: var(--dark-gray);
 }

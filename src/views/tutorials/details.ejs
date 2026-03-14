@@ -1,16 +1,21 @@
 <%- include('../partials/header') %>
 <main>
     <div class="tutorial-header">
+        <img src="/images/<%= tutorial.slug %>/hero.jpg" class="hero-img" alt="Hero image for the <%= tutorial.slug %> tutorial">
         <h1><%= tutorial.title %></h1>
         <h2>By <%= tutorial.author %></h2>
         <p>Last updated on <%= tutorial.lastUpdated %></p>
     </div>
 
     <div class="tutorial-content">
-        <% paragraphs.forEach(paragraph => { %>
-            <p class="paragraph">
-                <%= paragraph %>
-            </p>
+        <% Object.values(tutorial.steps).forEach(step => { %>
+            <div class="tutorial-step">
+                <h3>Step <%= step.id %></h3>
+                <p class="<%= tutorial.slug %>">
+                    <%= step.text %>
+                </p>
+                <img src="<%= step.img %>" class="step-img" alt="Image for step <%= step.id %> of the <%= tutorial.title %> tutorial">
+                </div>
         <% }); %>
     </div>
 </main>

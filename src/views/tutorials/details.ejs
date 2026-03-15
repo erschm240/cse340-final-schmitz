@@ -12,9 +12,9 @@
             <div class="tutorial-step">
                 <h3>Step <%= step.id %></h3>
                 <p class="<%= tutorial.slug %>">
-                    <%= step.text %>
+                    <%= step.textContent %>
                 </p>
-                <img src="<%= step.img %>" class="step-img" alt="Image for step <%= step.id %> of the <%= tutorial.title %> tutorial">
+                <img src="<%= step.imgUrl %>" class="step-img" alt="Image for step <%= step.id %> of the <%= tutorial.title %> tutorial">
                 </div>
         <% }); %>
     </div>

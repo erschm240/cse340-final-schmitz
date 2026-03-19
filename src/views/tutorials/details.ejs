@@ -10,11 +10,11 @@
     <div class="tutorial-content">
         <% Object.values(tutorial.steps).forEach(step => { %>
             <div class="tutorial-step">
-                <h3>Step <%= step.id %></h3>
+                <h3>Step <%= step.stepOrder %></h3>
                 <p class="<%= tutorial.slug %>">
                     <%= step.textContent %>
                 </p>
-                <img src="<%= step.imgUrl %>" class="step-img" alt="Image for step <%= step.id %> of the <%= tutorial.title %> tutorial">
+                <img src="<%= step.imgUrl %>" class="step-img" alt="Image for step <%= step.stepOrder %> of the <%= tutorial.title %> tutorial">
                 </div>
         <% }); %>
     </div>

@@ -1,8 +1,8 @@
 import { getAllTutorials, getTutorialBySlug } from '../../models/tutorials/tutorials.js';
 
 // Route handler for tutorial list page
-const tutorialListPage = (req, res) => {
-    const tutorials = getAllTutorials();
+const tutorialListPage = async (req, res) => {
+    const tutorials = await getAllTutorials();
     
     res.render('tutorials/list', {
         title: 'Tutorials',
@@ -11,10 +11,10 @@ const tutorialListPage = (req, res) => {
 }
 
 // Route handler for tutorial details page
-const tutorialDetailsPage = (req, res, next) => {
+const tutorialDetailsPage = async (req, res, next) => {
     const tutorialSlug = req.params.tutorialSlug;
 
-    const tutorial = getTutorialBySlug(tutorialSlug);
+    const tutorial = await getTutorialBySlug(tutorialSlug);
 
     // If the tutorial doesn't exist
     if (!tutorial) {

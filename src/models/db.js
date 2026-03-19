@@ -26,13 +26,13 @@ const pool = new Pool({
  */
 let db = null;
 
-if (process.send.NODE_ENV.includes('dev') && process.env.ENABLE_SQL_LOGGING === 'true') {
+if (process.env.NODE_ENV.includes('dev') && process.env.ENABLE_SQL_LOGGING === 'true') {
     /**
      * Add pool wrapper for query logging
      */
     db = {
         async query(text, params) {
-            try{
+            try {
                 const start = Date.now();
                 const res = await pool.query(text, params);
                 const duration = Date.now() - start;

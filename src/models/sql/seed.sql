@@ -6,6 +6,16 @@ BEGIN;
 DROP TABLE IF EXISTS tutorial_steps CASCADE;
 DROP TABLE IF EXISTS tutorials CASCADE;
 DROP TABLE IF EXISTS instructors CASCADE;
+DROP TABLE IF EXISTS contact_form CASCADE;
+
+-- Create generic contact form table
+CREATE TABLE IF NOT EXISTS contact_form (
+    id SERIAL PRIMARY KEY,
+    recipient VARCHAR(255) NOT NULL,
+    subject VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    submitted TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 -- Create instructors table
 CREATE TABLE instructors (

@@ -9,14 +9,14 @@ html, body {
 }
 
 body {
-    padding: 20px;
+    padding: 1.4rem;
     height: 100%;
     display: grid;
     grid-template-rows: auto 1fr auto;
 
     nav {
-        padding: 20px;
-        margin: -20px -20px 20px -20px;
+        padding: 1.5rem;
+        margin: -1.5rem -1.5rem 1.5rem -1.5rem;
         background-color: var(--medium-purple);
         display: flex;
         flex-direction: column;
@@ -45,7 +45,7 @@ body {
             text-align: center;
 
             li {
-                margin-right: 15px;
+                margin-right: 1rem;
             }
 
             a {
@@ -72,8 +72,8 @@ p {
 }
 
 footer {
-    padding: 20px;
-    margin: 20px -20px -20px -20px;
+    padding: 1.5rem;
+    margin: 1.5rem -1.5rem -1.5rem -1.5rem;
     background-color: var(--medium-purple);
     color: var(--dark-gray);
 }

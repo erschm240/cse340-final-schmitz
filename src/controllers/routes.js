@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { homePage } from './index.js';
 import { tutorialListPage, tutorialDetailsPage } from './tutorials/tutorials.js';
 import { instructorListPage, instructorDetailsPage } from './instructors/instructors.js';
+import contactRoutes from './forms/contact.js';
 
 // Create a new router instance
 const router = Router();
@@ -18,6 +19,12 @@ router.use('/instructors', (req, res, next) => {
     next();
 });
 
+// Add contact-specific styles
+router.use('/contact', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/contact.css">');
+    next();
+});
+
 // Homepage
 router.get('/', homePage);
 
@@ -28,5 +35,8 @@ router.get('/tutorials/:tutorialSlug', tutorialDetailsPage);
 // Instructor routes
 router.get('/instructors', instructorListPage);
 router.get('/instructors/:instructorSlug', instructorDetailsPage);
+
+// Contact routes
+router.use('/contact', contactRoutes);
 
 export default router;

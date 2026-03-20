@@ -1,4 +1,4 @@
-import { getAllTutorials, getTutorialBySlug } from '../../models/tutorials/tutorials.js';
+import { getAllTutorials, getTutorialBySlug, getTutorialSteps } from '../../models/tutorials/tutorials.js';
 
 // Route handler for tutorial list page
 const tutorialListPage = async (req, res) => {
@@ -23,9 +23,13 @@ const tutorialDetailsPage = async (req, res, next) => {
         return next(err);
     }
 
+    const tutorialSteps = await getTutorialSteps(tutorialSlug);
+    // console.log('Steps: ', tutorialSteps);
+
     res.render('tutorials/details', {
         title: tutorial.title,
-        tutorial: {...tutorial}
+        tutorial: {...tutorial},
+        steps: {...tutorialSteps}
     });
 };
 

@@ -15,7 +15,7 @@ CREATE TABLE instructors (
     username VARCHAR(100) NOT NULL,
     img_url VARCHAR(300) NOT NULL,
     biography_text TEXT,
-    join_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    join_date TIMESTAMP DEFAULT CURRENT_DATE
 );
 
 -- Create tutorials table
@@ -24,7 +24,7 @@ CREATE TABLE tutorials (
     slug VARCHAR(200) UNIQUE NOT NULL,
     title VARCHAR(200) NOT NULL,
     description TEXT,
-    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_updated TIMESTAMP DEFAULT CURRENT_DATE,
     author VARCHAR(200) NOT NULL,
     likes INTEGER DEFAULT 0
 );
@@ -63,3 +63,5 @@ INSERT INTO tutorial_steps (step_order, slug, img_url, text_content) VALUES
 (2, 'knit-stitch', '/images/knit-stitch/step-2.jpg', 'Nunc mollis facilisis massa, quis ullamcorper nisi iaculis vitae. Nunc risus magna, fringilla eleifend leo eu, pulvinar laoreet leo. Ut tempor ultrices mauris, sit amet viverra elit ornare id. Nulla facilisi. Praesent sollicitudin tincidunt eros, et rhoncus velit egestas sed.'),
 (3, 'knit-stitch', '/images/knit-stitch/step-3.jpg', 'In vel enim mi. Cras facilisis enim eu tempor porta. Sed malesuada elit non imperdiet semper. Duis quis enim elementum, tempus ipsum eget, finibus dolor. Phasellus vulputate condimentum purus, et elementum turpis vehicula et.'),
 (4, 'knit-stitch', '/images/knit-stitch/step-4.jpg', 'Phasellus quis tempus risus, ut facilisis libero. Donec rhoncus enim interdum erat vulputate ultrices. Cras dapibus sed nisl suscipit bibendum. Etiam id elit ut ex feugiat pretium et sit amet felis. Nunc auctor vestibulum est, ac ultrices elit rutrum at. Etiam sit amet dui massa. Nam maximus convallis lacinia.');
+
+COMMIT;

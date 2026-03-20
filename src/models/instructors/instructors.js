@@ -1,38 +1,67 @@
-const instructors = {
-    'emily-johnson': {
-        id: 0,
-        slug: 'emily-johnson',
-        name: 'Emily Johnson',
-        username: 'emilyknits1234',
-        imgUrl: '/images/instructors/emily-johnson.jpg',
-        biographyText: 'Hi! I’m Emily and I’ve been knitting for 5 years. I love sharing my knowledge with others.'
-    },
-    'amber-brown': {
-        id: 1,
-        slug: 'amber-brown',
-        name: 'Amber Brown',
-        username: 'crazycrochet89',
-        imgUrl: `/images/instructors/amber-brown.jpg`,
-        biographyText: 'Hi! I’m Amber and I’ve been crocheting for 8 years. I love sharing my knowledge with others.'
-    },
-    'jennifer-clarke': {
-        id: 2,
-        slug: 'jennifer-clarke',
-        name: 'Jennifer Clarke',
-        username: 'craftingwithjennifer54',
-        imgUrl: `/images/instructors/jennifer-clarke.jpg`,
-        biographyText: 'Hi! I’m Jennifer and I’ve been knitting for 7 years. I love sharing my knowledge with others.'
-    }
-}
+import db from '../db.js';
 
-// Model functions
+/**
+ * Get all instructors from the database
+ * 
+ * @returns {Promise<Array>} Array of instructor objects
+ */
+const getAllInstructors = async () => {
+    /**
+     * Get all the available instructors
+     */
+    const query = `
+        SELECT id, slug, name, username, img_url, biography_text, join_date
+        FROM instructors
+    `;
 
-const getAllInstructors = () => {
-    return instructors;
+    const result = await db.query(query);
+
+    /**
+     * Map database rows to JavaScript objects with camelCase property names.
+     */
+    return result.rows.map(instructor => ({
+        id: instructor.id,
+        slug: instructor.slug,
+        name: instructor.name,
+        username: instructor.username,
+        imgUrl: instructor.img_url,
+        biographyText: instructor.biography_text,
+        joinDate: instructor.join_date
+    }));
 };
 
-const getInstructorBySlug = (instructorSlug) => {
-    return instructors[instructorSlug] || null;
+/**
+ * @param {string} slug - Instructor slug
+ * @returns {Promise<Object>} Instructor object or empty object if not found
+ */
+const getInstructorBySlug = async (slug) => {
+    /**
+     * Get a single instructor by slug
+     */
+    const query = `
+        SELECT id, slug, name, username, img_url, biography_text, join_date
+        FROM instructors
+        WHERE slug = $1
+    `;
+
+    const result = await db.query(query, [slug]);
+
+    /**
+     * Only return something if the object exists
+     */
+    if (result.rows.length === 0) return {};
+
+    const instructor = result.rows[0];
+
+    return {
+        id: instructor.id,
+        instructorSlug: instructor.slug,
+        title: instructor.title,
+        description: instructor.description,
+        lastUpdated: instructor.last_updated,
+        author: instructor.author,
+        likes: instructor.likes
+    };
 };
 
 export { getAllInstructors, getInstructorBySlug };

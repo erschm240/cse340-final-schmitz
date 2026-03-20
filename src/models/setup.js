@@ -19,7 +19,7 @@ const setupDatabase = async () => {
 
     try {
         const result = await db.query("SELECT EXISTS(SELECT 1 FROM tutorials LIMIT 1) as has_data");
-        hasData = result.rows[0]?.hasData || false;
+        hasData = result.rows[0]?.has_data || false;
     } catch (error) {
         /**
          * If the above query fails, treat the same as no data and complete a re-seed.

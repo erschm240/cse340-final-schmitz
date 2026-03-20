@@ -1,9 +1,9 @@
 import db from '../db.js';
 
 /**
- * Get all tutorials from the database.
+ * Get all tutorials from the database
  * 
- * @returns {Promise<Array>} Array of course objects with department information
+ * @returns {Promise<Array>} Array of tutorial objects
  */
 const getAllTutorials = async () => {
     /**
@@ -19,34 +19,30 @@ const getAllTutorials = async () => {
     /**
      * Map database rows to JavaScript objects with camelCase property names.
      */
-    return result.rows.map(tutorials => ({
-        id: tutorials.id,
-        slug: tutorials.slug,
-        title: tutorials.title,
-        description: tutorials.description,
-        lastUpdated: tutorials.last_updated,
-        author: tutorials.author,
-        likes: tutorials.likes
+    return result.rows.map(tutorial => ({
+        id: tutorial.id,
+        slug: tutorial.slug,
+        title: tutorial.title,
+        description: tutorial.description,
+        lastUpdated: tutorial.last_updated,
+        author: tutorial.author,
+        likes: tutorial.likes
     }));
 };
 
 /**
  * 
- * @param {string} slug - Course slug
- * @returns {Promise<Object>} Tutorial object with steps, or empty object if not found
+ * @param {string} slug - Tutorial slug
+ * @returns {Promise<Object>} Tutorial object or empty object if not found
  */
 const getTutorialBySlug = async (slug) => {
     /**
-     * Get a single tutorial with the slug, JOIN with tutorial.steps to get the main content for the page.
-     * Aliases: 't' for tutorials, 's' for tutorial_steps
+     * Get a single tutorial by slug
      */
-
     const query = `
-        SELECT t.id, t.slug, t.title, t.description, t.last_updated, t.author, t.likes,
-            s.step_order, s.img_url, s.text_content
-        FROM tutorials t
-        JOIN tutorial_steps s ON s.slug = t.slug
-        WHERE t.slug = $1
+        SELECT id, slug, title, description, last_updated::date, author, likes
+        FROM tutorials
+        WHERE slug = $1
     `;
 
     const result = await db.query(query, [slug]);
@@ -57,6 +53,7 @@ const getTutorialBySlug = async (slug) => {
     if (result.rows.length === 0) return {};
 
     const tutorial = result.rows[0];
+
     return {
         id: tutorial.id,
         tutorialSlug: tutorial.slug,
@@ -64,15 +61,42 @@ const getTutorialBySlug = async (slug) => {
         description: tutorial.description,
         lastUpdated: tutorial.last_updated,
         author: tutorial.author,
-        likes: tutorial.likes,
-        stepOrder: tutorial.step_order,
-        imgUrl: tutorial.img_url,
-        textContent: tutorial.text_content
+        likes: tutorial.likes
     };
 };
 
 /**
- * Wrapper functions
+ * 
+ * @param {string} slug - Tutorial slug
+ * @returns {Promise<Object>} Tutorial steps object or empty object if not found
  */
+const getTutorialSteps = async (slug) => {
+    /**
+     * Get the steps as an array for a tutorial
+     */
+    const query = `
+        SELECT step_order, slug, img_url, text_content
+        FROM tutorial_steps
+        WHERE slug = $1
+    `;
 
-export { getAllTutorials, getTutorialBySlug };
+    const result = await db.query(query, [slug]);
+
+    /**
+     * Only return something if the object exists
+     */
+    if (result.rows.length === 0) return {};
+
+    const tutorialSteps = result.rows.map(step => {
+        return {
+            stepOrder: step.step_order,
+            slug: step.slug,
+            imgUrl: step.img_url,
+            textContent: step.text_content
+        }
+    });
+
+    return tutorialSteps;
+}
+
+export { getAllTutorials, getTutorialBySlug, getTutorialSteps };

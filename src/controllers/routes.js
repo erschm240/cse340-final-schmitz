@@ -3,6 +3,7 @@ import { homePage } from './index.js';
 import { tutorialListPage, tutorialDetailsPage } from './tutorials/tutorials.js';
 import { instructorListPage, instructorDetailsPage } from './instructors/instructors.js';
 import contactRoutes from './forms/contact.js';
+import registrationRoutes from './forms/registration.js';
 
 // Create a new router instance
 const router = Router();
@@ -25,6 +26,12 @@ router.use('/contact', (req, res, next) => {
     next();
 });
 
+// Add registration-specific styles
+router.use('/register', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/registration.css">');
+    next();
+});
+
 // Homepage
 router.get('/', homePage);
 
@@ -38,5 +45,8 @@ router.get('/instructors/:instructorSlug', instructorDetailsPage);
 
 // Contact routes
 router.use('/contact', contactRoutes);
+
+// Registration routes
+router.use('/register', registrationRoutes);
 
 export default router;

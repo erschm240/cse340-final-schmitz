@@ -15,7 +15,7 @@ const contactFormPage = (req, res) => {
 };
 
 /**
- * Handle contact form subbmission with validation
+ * Handle contact form submission with validation
  * Pass: save to db and redirect
  * Fail: log errors and redirect
  */

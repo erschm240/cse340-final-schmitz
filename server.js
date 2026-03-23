@@ -81,7 +81,7 @@ app.use((err, req, res, next) => {
     } catch (renderErr) {
         // Send a simple error page if rendering fails
         if (!res.headersSent) {
-            res.status(status).send(`<h1>Error ${status}</h1><p>An error occured.</p>`);
+            res.status(status).send(`<h1>Error ${status}</h1><p>An error occurred.</p>`);
         }
     }
 });

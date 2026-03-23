@@ -1,0 +1,115 @@
+@import 'variables.css';
+
+h1 {
+    text-align: center;
+    color: var(--dark-gray);
+}
+
+/* Contact form styles */
+.registration-form {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 8px;
+    background-color: var(--light-purple);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.8rem;
+        font-size: 1.3rem;
+        font-weight: bold;
+        font-family: var(--header-font);
+        color: var(--dark-gray);
+    }
+
+    input {
+        width: 100%;
+        padding: 0.75rem;
+        box-sizing: border-box;
+        border: 1px solid var(--medium-purple);
+        border-radius: 8px;
+        font-size: 1rem;
+        font-family: var(--paragraph-font);
+        background-color: var(--off-white);
+        transition: border-color 0.3s ease;
+
+        &:focus {
+            outline: none;
+            border-color: var(--dark-purple);
+        }
+
+        &:user-invalid {
+            border-color: var(--error-border);
+        }
+
+        &:user-valid {
+            border-color: var(--success-border);
+        }
+    }
+
+    .help-text {
+            font-size: 0.9rem;
+            color: var(--dark-purple);
+            margin-top: 0.25rem;
+        }
+
+    .submit-button {
+        width: 80%;
+        display: flex;
+        justify-self: center;
+        justify-content: center;
+        padding: 1rem;
+        background-color: var(--dark-purple);
+        border: none;
+        border-radius: 8px;
+        color: var(--off-white);
+        font-size: 1rem;
+        font-family: var(--paragraph-font);
+        font-weight: bold;
+        cursor: pointer;
+    }
+}
+
+/* Contact Responses Styles */
+.users-list {
+    max-width: 800px;
+    margin: 2rem auto;
+
+    .user-card {
+        background-color: var(--light-purple);
+        border: 1px solid var(--medium-purple);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        font-family: var(--paragraph-font);
+        color: var(--dark-gray);
+
+        .user-header, .label {
+            font-weight: bold;
+        }
+        
+        .user-details {
+            margin: 0.8rem 0;
+        }
+
+        .detail-item {
+            margin: 1rem 0;
+        }
+
+        .value {
+            margin-top: 0.4rem;
+        }
+    }
+
+    .no-responses {
+        text-align: center;
+        color: var(--dark-gray);
+        font-style: italic;
+        padding: 2rem;
+    }
+}

@@ -5,6 +5,7 @@ BEGIN;
 -- Drop existing tables in reverse depencency order
 DROP TABLE IF EXISTS tutorial_steps CASCADE;
 DROP TABLE IF EXISTS tutorials CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS instructors CASCADE;
 DROP TABLE IF EXISTS contact_form CASCADE;
 
@@ -18,29 +19,40 @@ CREATE TABLE IF NOT EXISTS contact_form (
 );
 
 -- Create instructors table
-CREATE TABLE instructors (
+CREATE TABLE IF NOT EXISTS instructors (
     id SERIAL PRIMARY KEY,
     slug VARCHAR(200) UNIQUE NOT NULL,
-    name VARCHAR(200) NOT NULL,
+    name VARCHAR(255) NOT NULL,
     username VARCHAR(100) NOT NULL,
     img_url VARCHAR(300) NOT NULL,
     biography_text TEXT,
-    join_date TIMESTAMP DEFAULT CURRENT_DATE
+    join_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create users table
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    username VARCHAR(100) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create tutorials table
-CREATE TABLE tutorials (
+CREATE TABLE IF NOT EXISTS tutorials (
     id SERIAL PRIMARY KEY,
     slug VARCHAR(200) UNIQUE NOT NULL,
     title VARCHAR(200) NOT NULL,
     description TEXT,
-    last_updated TIMESTAMP DEFAULT CURRENT_DATE,
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     author VARCHAR(200) NOT NULL,
     likes INTEGER DEFAULT 0
 );
 
 -- create tutorial steps table
-CREATE TABLE tutorial_steps (
+CREATE TABLE IF NOT EXISTS tutorial_steps (
     id SERIAL PRIMARY KEY,
     step_order INTEGER NOT NULL,
     slug VARCHAR(200) NOT NULL,

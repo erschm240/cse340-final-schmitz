@@ -1,0 +1,53 @@
+<%- include('../../partials/header') %>
+<main>
+    <h1><%= title %></h1>
+    <p> Register for a new account by providing your information below. All fields are required and passwords must meet security requirements.</p>
+
+    <form method="POST" action="/register" class="registration-form">
+        <!-- Name field -->
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" minlength="2" required>
+        </div>
+
+        <!-- Username field -->
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Choose a username" minlength="2" required>
+        </div>
+
+        <!-- Email field -->
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+
+        <!-- Email confirmation field -->
+        <div class="form-group">
+            <label for="emailConfirm">Confirm Email</label>
+            <input type="email" id="emailConfirm" name="emailConfirm" placeholder="Enter the same email" required>
+        </div>
+
+        <!-- Password field -->
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter a password" minlength="8" pattern="(?=.*[0-9])(?=.*[!@#$%^&*]).*" required>
+            <div class="help-text">
+                <p>Must be at least 8 characters with a number and special character</p>
+            </div>
+        </div>
+
+        <!-- Password confirmation field -->
+        <div class="form-group">
+            <label for="passwordConfirm">Confirm Password</label>
+            <input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Enter the same password" minlength="8" pattern="(?=.*[0-9])(?=.*[!@#$%^&*]).*" required>
+            <div class="help-text">
+                <p>Must be at least 8 characters with a number and special character</p>
+            </div>
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="submit-button">Create Account</button>
+    </form>
+</main>
+<%- include('../../partials/footer') %>

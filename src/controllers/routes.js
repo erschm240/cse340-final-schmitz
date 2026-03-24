@@ -2,8 +2,12 @@ import { Router } from 'express';
 import { homePage } from './index.js';
 import { tutorialListPage, tutorialDetailsPage } from './tutorials/tutorials.js';
 import { instructorListPage, instructorDetailsPage } from './instructors/instructors.js';
+import { processLogout, displayDashboard } from './forms/login.js';
+import { requireLogin } from '../middleware/auth.js';
 import contactRoutes from './forms/contact.js';
 import registrationRoutes from './forms/registration.js';
+import loginRoutes from './forms/login.js';
+
 
 // Create a new router instance
 const router = Router();
@@ -32,6 +36,12 @@ router.use('/register', (req, res, next) => {
     next();
 });
 
+// Add login-specific styles
+router.use('/login', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/login.css">');
+    next();
+});
+
 // Homepage
 router.get('/', homePage);
 
@@ -48,5 +58,12 @@ router.use('/contact', contactRoutes);
 
 // Registration routes
 router.use('/register', registrationRoutes);
+
+// Login routes (form and submission)
+router.use('/login', loginRoutes);
+
+// Authentication related routes
+router.get('/logout', processLogout);
+router.get('/dashboard', requireLogin, displayDashboard);
 
 export default router;

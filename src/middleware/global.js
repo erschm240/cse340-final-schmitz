@@ -39,6 +39,12 @@ const addLocalVariables = (req, res, next) => {
 
     // Grant access to head assets (styles and scripts)
     setHeadAssetsFunctionality(res);
+
+    // Convenience variable for UI based on session state
+    res.locals.isLoggedIn = false;
+    if (req.session && req.session.user) {
+        res.locals.isLoggedIn = true;
+    }
     
     next();
 };

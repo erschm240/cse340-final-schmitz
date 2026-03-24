@@ -32,12 +32,26 @@
                 <span class="logo-text">The Knit and Crochet Guide</span>
             </a>
             <ul>
+                <!-- Permanently visible links -->
                 <li><a href="/">Home</a></li>
                 <li><a href="/tutorials">Tutorials</a></li>
                 <li><a href="/instructors">Meet Our Instructors</a></li>
                 <li><a href="/contact">Contact a Site Member</a></li>
                 <li><a href="/register">Create Account</a></li>
-                <li><a href="/register/list">Users</a></li>
+
+                <!-- Only visible when logged in -->
+                <% if (isLoggedIn) { %>
+                    <li><a href="/dashboard"></a></li>
+                    <li><a href="/register/list">Users</a></li>
+                    <li><a href="/contact/responses">Contact Responses</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                <% } %>
+
+                <!-- Only visible when not logged in -->
+                <% if (!isLoggedIn) { %>
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Create Account</a></li>
+                <% } %>
             </ul>
         </nav>
     </header>

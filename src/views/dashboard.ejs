@@ -1,0 +1,32 @@
+<%- include('partials/header') %>
+<main>
+    <div class="dashboard">
+        <h1>Welcome to your Dashboard</h1>
+        <p>This is a protected page that requires authentication. Only logged-in users can access this content.</p>
+        <div class="user-info">
+            <h2>Your Account Information</h2>
+            <div class="user-detail">
+                <p>
+                    <span class="label">Name:</span>
+                    <span class="value"><%= user.name %></span>
+                </p>
+                <p>
+                    <span class="label">Email:</span>
+                    <span class="value"><%= user.email %></span>
+                </p>
+                <div class="user-detail">
+                    <span class="label">Role:</span>
+                    <span class="value"><%= user.roleName %></span>
+                </div>
+                <p>
+                    <span class="label">Date Created:</span>
+                    <span class="value"><%= new Date(user.created_at).toLocaleDateString() %></span>
+                </p>
+            </div>
+            <div class="dashboard-actions">
+                <a href="/logout" class="logout-button">Logout</a>
+            </div>
+        </div>
+    </div>
+</main>
+<%- include('partials/footer') %>

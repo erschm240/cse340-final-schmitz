@@ -6,6 +6,12 @@ html, body {
     margin: 0;
     box-sizing: border-box;
     height: 100%;
+
+    /* Uncomment to change site highlight color */
+    /* &::selection {
+        background-color: var(--dark-purple);
+        color: var(--off-white);
+    } */
 }
 
 body {

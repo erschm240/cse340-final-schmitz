@@ -1,10 +1,9 @@
 <%- include('partials/header') %>
 <main>
     <div class="dashboard">
-        <h1>Welcome to your Dashboard</h1>
-        <p>This is a protected page that requires authentication. Only logged-in users can access this content.</p>
+        <h1>Welcome to the Dashboard!</h1>
         <div class="user-info">
-            <h2>Your Account Information</h2>
+            <h2>Account Information</h2>
             <div class="user-detail">
                 <p>
                     <span class="label">Name:</span>
@@ -14,10 +13,10 @@
                     <span class="label">Email:</span>
                     <span class="value"><%= user.email %></span>
                 </p>
-                <div class="user-detail">
+                <p>
                     <span class="label">Role:</span>
                     <span class="value"><%= user.roleName %></span>
-                </div>
+                </p>
                 <p>
                     <span class="label">Date Created:</span>
                     <span class="value"><%= new Date(user.created_at).toLocaleDateString() %></span>

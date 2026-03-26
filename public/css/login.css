@@ -12,6 +12,11 @@ p {
 
 a {
     color: var(--dark-purple);
+    text-decoration: none;
+
+    &:hover {
+        color: var(--medium-purple);
+    }
 }
 
 /* Login form styles */

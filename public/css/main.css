@@ -84,6 +84,39 @@ footer {
     color: var(--dark-gray);
 }
 
+/* Dashboard styles */
+.user-detail {
+    background-color: var(--light-purple);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.dashboard-actions {
+    display: flex;
+    justify-content: center;
+
+    .logout-button {
+        display: inline-block;
+        margin: 1.5rem 0;
+        padding: 1rem 1.5rem;
+        background-color: var(--dark-purple);
+        border-radius: 8px;
+        color: var(--off-white);
+        text-decoration: none;
+    }
+}
+
+/* @media screen and (min-width: 700px) {
+    nav {
+        justify-content: space-between;
+    }
+    
+    nav, ul {
+        flex-direction: column !important;
+        gap: 10px;
+    }
+} */
+
 @media screen and (min-width: 1000px) {
     nav {
         justify-content: space-between;

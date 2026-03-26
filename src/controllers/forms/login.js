@@ -1,7 +1,6 @@
 import { body, validationResult } from 'express-validator';
 import { findUserByEmail, verifyPassword } from '../../models/forms/login.js';
 import { Router } from 'express';
-import session from 'express-session';
 
 const router = Router();
 
@@ -59,9 +58,10 @@ const processLogin = async (req, res) => {
         // Remove password from user object before storing in session
         delete user.password;
 
-        req.session.user;
+        req.session.user = user;
 
         res.redirect('/dashboard');
+
     } catch (error) {
         console.error('Error during login: ', error);
         return res.redirect('/login');

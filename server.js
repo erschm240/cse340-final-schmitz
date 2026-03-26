@@ -1,21 +1,28 @@
 /**
  * Imports
  */
+// Basic imports
 import express from 'express';
 import { fileURLToPath } from 'url';
 import path from 'path';
+
+// Database import
 import { setupDatabase, testConnection } from './src/models/setup.js';
+
+// Session imports
 import session from 'express-session';
 import connectPgSimple from 'connect-pg-simple';
 import { caCert } from './src/models/db.js';
 import { startSessionCleanup } from './src/utils/session-cleanup.js';
+
+// Flash import
+import flash from './src/middleware/flash.js';
 
 /**
  * MVC Components
  */
 import routes from './src/controllers/routes.js';
 import { addLocalVariables } from './src/middleware/global.js';
-import { start } from 'repl';
 
 /**
  * Server Configuration
@@ -78,6 +85,9 @@ app.use(express.json());
  * Global Middleware
  */
 app.use(addLocalVariables);
+
+// Flash message middleware
+app.use(flash);
 
 /**
  * Routes

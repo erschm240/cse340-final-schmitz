@@ -106,6 +106,47 @@ footer {
     }
 }
 
+/* Flash messages */
+.flash-messages {
+    margin: 1rem auto;
+    max-width: 1200px;
+    padding: 0 1rem;
+
+    .flash {
+        padding: 1rem 1.25rem;
+        margin-bottom: 1rem;
+        border-radius: 4px;
+        border-left: 4px solid;
+        font-size: 0.95rem;
+        font-family: var(--paragraph-font);
+        line-height: 1.5;
+
+        &.success {
+            background-color: var(--success-bg);
+            border-color: var(--success-border);
+            color: var(--success-text);
+        }
+
+        &.info {
+            background-color: var(--info-bg);
+            border-color: var(--info-border);
+            color: var(--info-text);
+        }
+
+        &.warning {
+            background-color: var(--warning-bg);
+            border-color: var(--warning-border);
+            color: var(--warning-text);
+        }
+
+        &.error {
+            background-color: var(--error-bg);
+            border-color: var(--error-border);
+            color: var(--error-text);
+        }
+    }
+}
+
 /* @media screen and (min-width: 700px) {
     nav {
         justify-content: space-between;

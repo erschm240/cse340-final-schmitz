@@ -11,29 +11,35 @@ const router = Router();
 const registrationValidation = [
     body('name')
         .trim()
-        .isLength({ min: 2 })
-        .withMessage('Name must be at least 2 characters'),
-    body('username')
-        .trim()
-        .isLength({ min: 2 })
-        .withMessage('Name must be at least 2 characters'),
+        .isLength({min: 2, max: 100})
+        .withMessage('Name must be between 2 and 100 characters')
+        .matches(/^[a-zA-Z\s'-]+$/)
+        .withMessage('Name can only contain letters, spaces, hyphens, and apostrophes'),
     body('email')
         .trim()
         .isEmail()
         .normalizeEmail()
-        .withMessage('Must be a valid email address'),
+        .withMessage('Must be a valid email address')
+        .isLength({ max: 255 })
+        .withMessage('Email address is too long'),
     body('emailConfirm')
         .trim()
-        .custom((value, { req }) => value === req.body.email)
+        .custom((value, {req}) => value === req.body.email)
         .withMessage('Email addresses must match'),
     body('password')
-        .isLength({ min: 8 })
+        .isLength({min: 8, max: 128})
+        .withMessage('Password must be between 8 and 128 characters')
+        .matches(/[a-z]/)
+        .withMessage('Password must contain at least one lowercase letter')
+        .matches(/[A-Z]/)
+        .withMessage('Password must contain at least one uppercase letter')
         .matches(/[0-9]/)
         .withMessage('Password must contain at least one number')
-        .matches(/[!@#$%^&*]/)
+        .matches(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/)
         .withMessage('Password must contain at least one special character'),
+
     body('passwordConfirm')
-        .custom((value, { req }) => value === req.body.password)
+        .custom((value, {req}) => value === req.body.password)
         .withMessage('Passwords must match')
 ];
 
@@ -53,7 +59,9 @@ const processRegistration = async (req, res) => {
     const errors = validationResult(req);
 
     if(!errors.isEmpty()) {
-        console.error('Validation errors: ', errors.array());
+        errors.array().forEach(error => {
+            req.flash('error', error.msg);
+        });
         return res.redirect('/register');
     }
 
@@ -65,7 +73,7 @@ const processRegistration = async (req, res) => {
         const checkEmail = await emailExists(email);
 
         if(checkEmail) {
-            console.log('Email already submitted');
+            req.flash('warning', 'Sorry, an account with this email already exists.');
             return res.redirect('/register');
         }
 
@@ -75,7 +83,7 @@ const processRegistration = async (req, res) => {
         // Save user to database with hashed password
         await saveUser(name, username, email, hashedPassword);
 
-        console.log('Registration successful');
+        req.flash('success', 'Account creation successful! Feel free to login at any time.');
         return res.redirect('/register/list');
 
     } catch (error) {

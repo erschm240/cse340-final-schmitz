@@ -1,27 +1,9 @@
-import { body, validationResult } from 'express-validator';
+import { validationResult } from 'express-validator';
 import { findUserByEmail, verifyPassword } from '../../models/forms/login.js';
 import { Router } from 'express';
+import { loginValidation } from '../../middleware/validation/forms.js';
 
 const router = Router();
-
-/**
- * Validation rules for login form
- */
-const loginValidation = [
-    body('email')
-        .trim()
-        .isEmail()
-        .withMessage('Please provide a valid email address')
-        .normalizeEmail()
-        .isLength({max: 255})
-        .withMessage('Email Address is too long'),
-
-    body('password')
-    .notEmpty()
-    .withMessage('Password is required')
-    .isLength({min: 8, max: 128})
-    .withMessage('Password must be between 8 and 128 characters')
-];
 
 /**
  * Display the login form page
@@ -47,7 +29,6 @@ const processLogin = async (req, res) => {
 
     // Extract email and password from req.body
     const { email, password } = req.body;
-
     try {
         const user = await findUserByEmail(email);
 
@@ -56,7 +37,7 @@ const processLogin = async (req, res) => {
             return res.redirect('/login');
         }
 
-        const verifyPwd = await verifyPassword(password, user.password);
+        const verifyPwd = await verifyPassword(password, user.passwordHash);
         if (!verifyPwd) {
             req.flash('error', 'Invalid email or password');
             return res.redirect('/login');

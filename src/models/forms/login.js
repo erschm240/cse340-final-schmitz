@@ -10,14 +10,14 @@ import db from '../db.js';
 const findUserByEmail = async (email) => {
     const query = `
     SELECT
-    users.id,
+    users.user_id AS "userId",
     users.name,
     users.username,
     users.email,
-    users.password,
-    users.created_at
+    users.password_hash AS "passwordHash",
+    users.created_at AS "createdAt"
     FROM users
-    WHERE LOWER(users.email) = LOWER($1) OR LOWER(users.username) = LOWER($1)
+    WHERE LOWER(users.email) = LOWER($1)
     LIMIT 1
     `;
     const result = await db.query(query, [email]);

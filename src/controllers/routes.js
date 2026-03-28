@@ -3,7 +3,7 @@ import { homePage } from './index.js';
 import { tutorialListPage, tutorialDetailsPage } from './tutorials/tutorials.js';
 import { instructorListPage, instructorDetailsPage } from './instructors/instructors.js';
 import { processLogout, displayDashboard } from './forms/login.js';
-import { requireLogin } from '../middleware/auth.js';
+import { requireLogin, requireRole } from '../middleware/auth.js';
 import contactRoutes from './forms/contact.js';
 import registrationRoutes from './forms/registration.js';
 import loginRoutes from './forms/login.js';
@@ -64,6 +64,6 @@ router.use('/login', loginRoutes);
 
 // Authentication related routes
 router.get('/logout', processLogout);
-router.get('/dashboard', requireLogin, displayDashboard);
+router.get('/dashboard', requireLogin, requireRole, displayDashboard);
 
 export default router;

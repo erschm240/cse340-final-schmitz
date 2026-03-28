@@ -84,6 +84,16 @@ footer {
     color: var(--dark-gray);
 }
 
+/* General submit button styles */
+.submit-button {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+    &:active {
+        box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
+        transform: translateY(1px);
+    }
+}
+
 /* Dashboard styles */
 .user-detail {
     background-color: var(--light-purple);

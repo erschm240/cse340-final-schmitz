@@ -75,7 +75,7 @@ const getTutorialSteps = async (slug) => {
      * Get the steps as an array for a tutorial
      */
     const query = `
-        SELECT step_order, slug, img_url, text_content
+        SELECT step_order, slug, img_file_type, text_content
         FROM tutorial_steps
         WHERE slug = $1
     `;
@@ -91,7 +91,7 @@ const getTutorialSteps = async (slug) => {
         return {
             stepOrder: step.step_order,
             slug: step.slug,
-            imgUrl: step.img_url,
+            imgFileType: step.img_file_type,
             textContent: step.text_content
         }
     });

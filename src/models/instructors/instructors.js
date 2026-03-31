@@ -10,7 +10,7 @@ const getAllInstructors = async () => {
      * Get all the available instructors
      */
     const query = `
-        SELECT id, slug, name, username, img_url, biography_text, join_date
+        SELECT id, slug, name, username, img_file_type, biography_text, join_date
         FROM instructors
     `;
 
@@ -24,7 +24,7 @@ const getAllInstructors = async () => {
         slug: instructor.slug,
         name: instructor.name,
         username: instructor.username,
-        imgUrl: instructor.img_url,
+        imgFileType: instructor.img_file_type,
         biographyText: instructor.biography_text,
         joinDate: instructor.join_date
     }));
@@ -39,7 +39,7 @@ const getInstructorBySlug = async (slug) => {
      * Get a single instructor by slug
      */
     const query = `
-        SELECT id, slug, name, username, img_url, biography_text, join_date
+        SELECT id, slug, name, username, img_file_type, biography_text, join_date
         FROM instructors
         WHERE slug = $1
     `;

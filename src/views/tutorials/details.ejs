@@ -15,7 +15,7 @@
                 <p class="<%= tutorial.slug %>">
                     <%= step.textContent %>
                 </p>
-                <img src="<%= step.imgUrl %>" class="step-img" alt="Image for step <%= step.stepOrder %> of the <%= tutorial.title %> tutorial">
+                <img src="/images/<%= step.slug %>/step-<%= step.stepOrder %>.<%= step.imgFileType %>" class="step-img" alt="Image for step <%= step.stepOrder %> of the <%= tutorial.title %> tutorial">
                 </div>
         <% }); %>
     </div>

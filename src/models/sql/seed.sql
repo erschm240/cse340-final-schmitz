@@ -3,6 +3,7 @@
 BEGIN;
 
 -- Drop existing tables in reverse depencency order
+DROP TABLE IF EXISTS tutorial_comments CASCADE;
 DROP TABLE IF EXISTS tutorial_steps CASCADE;
 DROP TABLE IF EXISTS tutorials CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
@@ -17,6 +18,7 @@ CREATE TABLE IF NOT EXISTS contact_form (
     subject_type VARCHAR(255) NOT NULL,
     subject VARCHAR(255) NOT NULL,
     message TEXT NOT NULL,
+    sent_by VARCHAR(255) NOT NULL,
     submitted TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -69,6 +71,15 @@ CREATE TABLE IF NOT EXISTS tutorial_steps (
     img_file_type VARCHAR(300) NOT NULL,
     text_content TEXT,
     FOREIGN KEY (slug) REFERENCES tutorials(slug)
+);
+
+-- Create tutorial comment table
+CREATE TABLE IF NOT EXISTS tutorial_comments (
+    id SERIAL PRIMARY KEY,
+    sent_by VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    posted_in VARCHAR(200) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Insert instructors

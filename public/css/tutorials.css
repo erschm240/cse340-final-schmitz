@@ -73,6 +73,117 @@ h1 {
     }
 }
 
+.content-divider {
+    margin: 2rem -1.48rem;
+    background-color: var(--medium-purple);
+    padding: 0.5rem;
+}
+
+/* Comment form styling */
+.tutorial-comments {
+    max-width: 600px;
+    margin: 2rem auto;
+    width: 100%;
+
+    h3 {
+        font-size: 1.75rem;
+        text-align: center;
+    }
+
+    span {
+            font-family: var(--paragraph-font);
+            font-weight: bold;
+            font-size: 1.75rem;
+        }
+
+    .comment {
+        border-left: 2px solid var(--medium-purple);
+        padding: 0.2rem 1rem;
+        font-family: var(--paragraph-font);
+        color: var(--dark-gray);
+        margin: 0;
+        font-size: 1rem;
+        display: grid;
+        align-content: center;
+
+        .sent-by {
+            font-weight: normal;
+            color: var(--dark-purple);
+        }
+
+        .date-created {
+            font-size: 0.8rem;
+            margin-top: -0.5rem;
+        }
+
+        .message {
+            margin: 0.7rem;
+            margin-left: 0;
+        }
+    }
+
+    .no-comments {
+        display: block;
+        text-align: center;
+        font-size: 1.5rem;
+    }
+
+    .form-content {
+        text-align: center;
+        font-size: 1.5rem;
+
+        textarea {
+            width: 100%;
+            display: block;
+            font-family: var(--paragraph-font);
+            font-size: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid var(--medium-purple);
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+            
+            &:focus {
+                outline: none;
+                border-color: var(--dark-purple);
+            }
+        }
+    }
+
+    label {
+        display: block;
+    }
+
+    .submit-button {
+        width: 20%;
+        display: flex;
+        justify-self: center;
+        justify-content: center;
+        padding: 1rem;
+        background-color: var(--dark-purple);
+        border: none;
+        border-radius: 8px;
+        color: var(--off-white);
+        font-size: 1rem;
+        font-family: var(--paragraph-font);
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 2rem;
+    }
+    
+        .login-button {
+            display: flex;
+            margin: 1.5rem 0;
+            padding: 1rem 1.5rem;
+            background-color: var(--dark-purple);
+            border-radius: 8px;
+            color: var(--off-white);
+            text-decoration: none;
+            width: fit-content;
+            justify-self: center;
+        }
+}
+
 @media screen and (min-width: 1000px) {
     .tutorial-list {
         max-width: 1000px;

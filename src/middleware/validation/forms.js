@@ -101,9 +101,26 @@ const loginValidation = [
     .withMessage('Password must be between 8 and 128 characters')
 ];
 
+const commentValidation = [
+    body('message')
+        .trim()
+        .isLength({ min: 10, max: 2000 })
+        .withMessage('Message must be between 10 and 2000 characters')
+        .custom((value) => {
+            // Check for spam patterns (excessive repetition)
+            const words = value.split(/\s+/);
+            const uniqueWords = new Set(words);
+            if (words.length > 20 && uniqueWords.size / words.length < 0.3) {
+                throw new Error('Message appears to be spam');
+            }
+            return true;
+        })
+]
+
 export {
     contactValidation,
     registrationValidation,
     editAccountValidation,
-    loginValidation
+    loginValidation,
+    commentValidation
 };

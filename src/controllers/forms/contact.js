@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { body, validationResult } from "express-validator";
+import { validationResult } from "express-validator";
 import { createContactForm, getAllContactForms } from "../../models/forms/contact.js";
 import { contactValidation } from "../../middleware/validation/forms.js";
 
@@ -70,7 +70,7 @@ router.get('/', contactFormPage);
 /**
  * POST /contact - Handle contact form submission with validation
  */
-router.post('/', handleContactSubmission);
+router.post('/', contactValidation, handleContactSubmission);
 
 /**
  * GET /contact/responses - Display all contact form submissions

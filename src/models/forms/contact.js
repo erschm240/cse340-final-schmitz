@@ -7,8 +7,8 @@ import db from '../db.js';
  * @param {string} message - Message content
  * @returns {Promise<Object>} Newly created contact form record
  */
-const createContactForm = async(recipient, subjectType, subject, message) => {
-    const query =`
+const createContactForm = async (recipient, subjectType, subject, message) => {
+    const query = `
         INSERT INTO contact_form (recipient, subject_type, subject, message)
         VALUES ($1, $2, $3, $4)
         RETURNING *
@@ -18,7 +18,7 @@ const createContactForm = async(recipient, subjectType, subject, message) => {
 };
 
 const getAllContactForms = async () => {
-    const query =`
+    const query = `
         SELECT id, recipient, subject_type, subject, message, submitted
         FROM contact_form
         ORDER BY submitted DESC

@@ -1,13 +1,13 @@
 import { Router } from 'express';
 import { homePage } from './index.js';
-import { tutorialListPage, tutorialDetailsPage } from './tutorials/tutorials.js';
+import { tutorialListPage, tutorialDetailsPage, handleCommentSubmission } from './tutorials/tutorials.js';
 import { instructorListPage, instructorDetailsPage } from './instructors/instructors.js';
 import { processLogout, displayDashboard } from './forms/login.js';
-import { requireLogin, requireRole } from '../middleware/auth.js';
+import { requireLogin } from '../middleware/auth.js';
 import contactRoutes from './forms/contact.js';
 import registrationRoutes from './forms/registration.js';
 import loginRoutes from './forms/login.js';
-
+import { commentValidation } from '../middleware/validation/forms.js';
 
 // Create a new router instance
 const router = Router();
@@ -48,6 +48,8 @@ router.get('/', homePage);
 // Tutorial routes
 router.get('/tutorials', tutorialListPage);
 router.get('/tutorials/:tutorialSlug', tutorialDetailsPage);
+// POST /tutorials/:tutorialSlug - Handle comment form submission with validation
+router.post('/tutorials/:tutorialSlug', commentValidation, handleCommentSubmission, tutorialDetailsPage);
 
 // Instructor routes
 router.get('/instructors', instructorListPage);

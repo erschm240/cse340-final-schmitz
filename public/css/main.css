@@ -106,13 +106,14 @@ footer {
     justify-content: center;
 
     .logout-button {
-        display: inline-block;
+        display: block;
         margin: 1.5rem 0;
         padding: 1rem 1.5rem;
         background-color: var(--dark-purple);
         border-radius: 8px;
         color: var(--off-white);
         text-decoration: none;
+        width: fit-content;
     }
 }
 

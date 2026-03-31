@@ -1,7 +1,6 @@
 <%- include('../partials/header') %>
 <main>
     <div class="tutorial-header">
-        <% console.log('Tutorial: ', tutorial) %>
         <img src="/images/<%= tutorial.tutorialSlug %>/hero.jpg" class="hero-img" alt="Hero image for the <%= tutorial.slug %> tutorial">
         <h1><%= tutorial.title %></h1>
         <h2>By <%= tutorial.author %></h2>
@@ -18,6 +17,35 @@
                 <img src="/images/<%= step.slug %>/step-<%= step.stepOrder %>.<%= step.imgFileType %>" class="step-img" alt="Image for step <%= step.stepOrder %> of the <%= tutorial.title %> tutorial">
                 </div>
         <% }); %>
+    </div>
+    <div class="content-divider"></div>
+    <div class="tutorial-comments">
+        <h3><span><%= Object.values(comments).length %></span> Comment<% if (Object.values(comments) && Object.values(comments).length > 1) { %><span>s</span><% } %>
+        </h3>
+        <% if (Object.values(comments) && Object.values(comments).length > 0) { %>
+            <% Object.values(comments).forEach(comment => { %>
+                <div class="comment">
+                    <h4 class="sent-by"><%= comment.sentBy %></h4>
+                    <p class="date-created"><%= new Date(comment.createdAt).toLocaleDateString() %></p>
+                    <p class="message"><%= comment.message %></p>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <div class="no-comments">
+                <p>No comments yet.</p>
+            </div>
+        <% } %>
+        <% if (isLoggedIn) { %>
+            <form method="POST" action="/tutorials/<%= tutorial.tutorialSlug %>" class="comment-form">
+                <div class="form-content">
+                    <label for="message"><h3>Post a Comment</h3></label>
+                    <textarea id="message" name="message" rows="6" placeholder="What would you like to say?" minlength="10" required></textarea>
+                </div>
+                <button type="submit" class="submit-button">Post</button>
+            </form>
+        <% } else { %>
+            <a href="/login" class="login-button">Login to comment</a>
+        <% } %>
     </div>
 </main>
 <%- include('../partials/footer') %>

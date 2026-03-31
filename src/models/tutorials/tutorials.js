@@ -72,7 +72,7 @@ const getTutorialBySlug = async (slug) => {
  */
 const getTutorialSteps = async (slug) => {
     /**
-     * Get the steps as an array for a tutorial
+     * Get a tutorial's steps as an array
      */
     const query = `
         SELECT step_order, slug, img_file_type, text_content
@@ -93,10 +93,62 @@ const getTutorialSteps = async (slug) => {
             slug: step.slug,
             imgFileType: step.img_file_type,
             textContent: step.text_content
-        }
+        };
     });
 
     return tutorialSteps;
-}
+};
 
-export { getAllTutorials, getTutorialBySlug, getTutorialSteps };
+/**
+ * 
+ * @param {string} sentBy - Username of the user who posted
+ * @param {string} message - Text content of the comment
+ * @param {string} postedIn - Slug of the tutorial the comment was posted in
+ * @returns {Promise<Object>} Newly created comment
+ */
+const createTutorialComment = async (sentBy, message, postedIn) => {
+    const query = `
+        INSERT INTO tutorial_comments (sent_by, message, posted_in)
+        VALUES ($1, $2, $3)
+        RETURNING *
+    `;
+    const result = await db.query(query, [sentBy, message, postedIn]);
+    return result.rows[0];
+};
+
+/**
+ * 
+ * @param {string} postedIn - Slug of the tutorial the comment was posted in
+ * @returns {Promise<Object>} Tutorial comments object or empty object if not found
+ */
+const getTutorialComments = async (postedIn) => {
+    /**
+     * Get the tutorial comments as an array
+     */
+    const query = `
+        SELECT id, sent_by AS "sentBy", message, posted_in AS "postedIn", created_at AS "createdAt"
+        FROM tutorial_comments
+        WHERE posted_in = $1
+    `;
+
+    const result = await db.query(query, [postedIn]);
+
+    /**
+     * Only return something if the object exists
+     */
+    if (result.rows.length === 0) return {};
+
+    const tutorialComments = result.rows.map(comment => {
+        return {
+            id: comment.id,
+            sentBy: comment.sentBy,
+            message: comment.message,
+            postedIn: comment.postedIn,
+            createdAt: comment.createdAt
+        };
+    });
+
+    return tutorialComments;
+};
+
+export { getAllTutorials, getTutorialBySlug, getTutorialSteps, createTutorialComment, getTutorialComments };

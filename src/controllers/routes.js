@@ -64,6 +64,6 @@ router.use('/login', loginRoutes);
 
 // Authentication related routes
 router.get('/logout', processLogout);
-router.get('/dashboard', requireLogin, requireRole, displayDashboard);
+router.get('/dashboard', requireLogin, displayDashboard);
 
 export default router;

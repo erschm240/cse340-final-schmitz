@@ -157,7 +157,7 @@ footer {
     }
 }
 
-/* @media screen and (min-width: 700px) {
+@media screen and (min-width: 700px) {
     nav {
         justify-content: space-between;
     }
@@ -166,7 +166,7 @@ footer {
         flex-direction: column !important;
         gap: 10px;
     }
-} */
+}
 
 @media screen and (min-width: 1000px) {
     nav {

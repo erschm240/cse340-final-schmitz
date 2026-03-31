@@ -55,10 +55,11 @@ const processRegistration = async (req, res) => {
         await saveUser(name, username, email, hashedPassword);
 
         req.flash('success', 'Account creation successful! Feel free to login at any time.');
-        return res.redirect('/register/list');
+        return res.redirect('/login');
 
     } catch (error) {
         console.error('Error during registration: ', error);
+        req.flash('error', 'Unable to complete your registration. Please try again later.');
         return res.redirect('/register');
     }
 };
@@ -94,7 +95,7 @@ const displayEditAccountForm = async (req, res) => {
 
     const targetUser = await getUserById(targetUserId);
 
-    if(!targetUser) {
+    if (!targetUser) {
         req.flash('error', 'User not found');
         return res.redirect('/register/list');
     }

@@ -3,7 +3,7 @@
     <h1><%= title %></h1>
     <% if (users && users.length > 0) { %>
         <div class="users-list">
-            <% users.forEach(user => { %>
+            <% users.forEach(listUser => { %>
                 <%
                     // Calculate permissions for this user card
                     // 'user' variable contains the current logged-in user
@@ -14,27 +14,28 @@
                 %>
                 <div class="user-card">
                         <h2><%= listUser.name %></h2>
-                        <h2><%= listUser.username %></h2>
-                    <div class="user-header">
-                        <span class="user-id">ID: <%= user.id %></span>
-                    </div>
 
                     <div class="user-details">
                         <div class="detail-item">
+                            <div class="label">Username:</div>
+                            <div class="value"><%= listUser.username %></div>
+                        </div>
+
+                        <div class="detail-item">
                             <div class="label">Email:</div>
-                            <div class="value"><%= user.email %></div>
+                            <div class="value"><%= listUser.email %></div>
                         </div>
 
                         <div class="detail-item">
                             <div class="label">Register Date:</div>
-                            <div class="value"><%= new Date(user.created_at).toLocaleDateString() %></div>
+                            <div class="value"><%= new Date(listUser.createdAt).toLocaleDateString() %></div>
                         </div>
                     </div>
 
                     <% if (canEdit || canDelete) { %>
                         <div class="user-actions">
                             <% if (canEdit) { %>
-                                <a href="/register/<%= listUser.id %>/edit">Edit</a>
+                                <a href="/register/<%= listUser.userId %>/edit">Edit</a>
                             <% } %>
 
                             <% if (canDelete) { %>

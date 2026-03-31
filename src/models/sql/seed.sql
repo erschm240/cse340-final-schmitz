@@ -50,14 +50,6 @@ CREATE TABLE IF NOT EXISTS users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Roles table for role-based access control
-CREATE TABLE IF NOT EXISTS roles (
-    id SERIAL PRIMARY KEY,
-    role_name VARCHAR(50) UNIQUE NOT NULL,
-    role_description TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
 -- Create tutorials table
 CREATE TABLE IF NOT EXISTS tutorials (
     id SERIAL PRIMARY KEY,

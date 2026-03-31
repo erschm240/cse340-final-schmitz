@@ -39,7 +39,7 @@ const saveUser = async (name, username, email, hashedPassword) => {
  */
 const getAllUsers = async ( ) => {
     const query = `
-        SELECT user_id, name, username, email, created_at
+        SELECT user_id AS "userId", name, username, email, created_at AS "createdAt"
         FROM users
         ORDER BY created_at DESC
     `;
@@ -57,7 +57,7 @@ const getUserById = async (id) => {
             users.name,
             users.username,
             users.email,
-            users.created_at,
+            users.created_at AS "createdAt",
             roles.role_name AS "roleName"
         FROM users
         INNER JOIN roles ON users.role_id = roles.id

@@ -29,6 +29,7 @@ const processLogin = async (req, res) => {
 
     // Extract email and password from req.body
     const { email, password } = req.body;
+    
     try {
         const user = await findUserByEmail(email);
 
@@ -44,7 +45,7 @@ const processLogin = async (req, res) => {
         }
 
         // Remove password from user object before storing in session
-        delete user.password;
+        delete user.passwordHash;
 
         req.session.user = user;
 
@@ -99,13 +100,13 @@ const displayDashboard = (req, res) => {
     const sessionData = req.session;
 
     // Ensure user and sessionData do not contain password field
-    if (user && user.password) {
+    if (user && user.passwordHash) {
         console.error('Security error: password found in user object');
-        delete user.password;
+        delete user.passwordHash;
     }
-    if (sessionData.user && sessionData.user.password) {
+    if (sessionData.user && sessionData.user.passwordHash) {
         console.error('Security error: password found in sessionData.user');
-        delete sessionData.user.password;
+        delete sessionData.user.passwordHash;
     }
 
     res.render('dashboard', {

@@ -5,8 +5,18 @@
 
     <form method="POST" action="/contact" class="contact-form">
         <div class="form-group">
-            <label for="recipient">Recipient</label>
-            <input type="text" id="recipient" name="recipient" placeholder="Who is this message for?" minlength="2" required>
+            <label for="recipient">Recipient:</label>
+            <select name="recipient" id="recipient">
+                <% Object.values(recipients).forEach(recipient => { %>
+                    <option value="<%= recipient.username %>"><%= recipient.username %>/<%= recipient.name %></option>
+                <% }); %>
+            </select>
+            <label for="message-type">Message Type:</label>
+            <select name="message-type" id="message-type">
+                <% messageTypes.forEach(messageType => { %>
+                    <option value="<%= messageType %>"><%= messageType %></option>
+                <% }); %>
+            </select>
         </div>
         <div class="form-group">
             <label for="subject">Subject</label>

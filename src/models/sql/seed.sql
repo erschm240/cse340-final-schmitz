@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS contact_form CASCADE;
 CREATE TABLE IF NOT EXISTS contact_form (
     id SERIAL PRIMARY KEY,
     recipient VARCHAR(255) NOT NULL,
-    subject_type VARCHAR(255) NOT NULL,
+    message_type VARCHAR(255) NOT NULL,
     subject VARCHAR(255) NOT NULL,
     message TEXT NOT NULL,
     sent_by VARCHAR(255) NOT NULL,
@@ -94,6 +94,13 @@ INSERT INTO roles (role_name, role_description) VALUES
     ('instructor', 'Mid-level authorization on site, can create tutorials using the tutorial form, make changes to tutorials, react to tutorials with comments/likes, view liked tutorials, upload images to site, view and respond to messages sent to them'),
     ('admin', 'Administrator with full system access (full CRUD privileges), make changes to website and to tutorials, view and respond to all messages, may also react to tutorials but unlikely');
 
+INSERT INTO users (name, username, email, password_hash, role_id) VALUES
+    ('Ava Grace', 'gracethedog', 'admin@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
+    ('Emily Johnson', 'emilyknits1234', 'instructor@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
+    ('Amber Brown', 'crazycrochet89', 'instructor@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
+    ('Jennifer Clarke', 'jenniferclarke77', 'instructor@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
+    ('Molly Weaver', 'knittinggremlin77', 'user@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 1);
+
 -- Insert tutorials
 INSERT INTO tutorials (slug, title, description, author) VALUES
     ('cast-on-knit', 'Casting On for Knitting', 'Learn how to cast on to start your knitting project. The needles shown here are double pointed needles (abbreviated as DPNs), but you can also use single pointed needles. You may prefer them as a beginner since the stitches won’t fall off the bottom. I like circular needles, which are like DPNs but are connected on one end by a cord.', 'Emily Johnson'),
@@ -103,7 +110,7 @@ INSERT INTO tutorials (slug, title, description, author) VALUES
 
 -- Insert tutorial steps
 INSERT INTO tutorial_steps (step_order, slug, img_file_type, text_content) VALUES
-    (1, 'cast-on-knit', 'jpg', 'Create a slipknot with a long tail (enough length to make the amount of stitches you need).'),
+    (1, 'cast-on-knit', '/images/cast-on-knit', 'Create a slipknot with a long tail (enough length to make the amount of stitches you need).'),
     (2, 'cast-on-knit', 'jpg', 'Slide the slipknot loop on your knitting needle. Make sure the tail is “facing” you (best shown in the image), on the front side of the needle (the side you are closest to). The working yarn (the end of the yarn that leads into the yarn ball) should be on the opposite side.'),
     (3, 'cast-on-knit', 'jpg', 'Hold the needle in one hand and with the other, facing palm-down, put your pointer finger and thumb in between the two yarn strands. Hold both of them with your bottom three fingers. '),
     (4, 'cast-on-knit', 'jpg', 'Now twist your hand up to the left, so your palm is not fully up, but angled up and facing towards the right. Now you are ready to cast on loops.'),

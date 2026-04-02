@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { validationResult } from "express-validator";
-import { createContactForm, getAllContactForms } from "../../models/forms/contact.js";
+import { createContactForm, getAllContactForms, getAllPossibleRecipients } from "../../models/forms/contact.js";
 import { contactValidation } from "../../middleware/validation/forms.js";
 
 const router = Router();
@@ -8,9 +8,15 @@ const router = Router();
 /**
  * Display the contact form page
  */
-const contactFormPage = (req, res) => {
+const contactFormPage = async (req, res) => {
+    const recipients = await getAllPossibleRecipients();
+    console.log(recipients);
+    const messageTypes = ['Mistake in Tutorial', 'Error on Site', 'Tutorial Suggestion', 'Site Feature Suggestion'];
+
     res.render('forms/contact/form', {
-        title: 'Contact a Site Member'
+        title: 'Contact a Site Member',
+        recipients: recipients,
+        messageTypes: messageTypes
     });
 };
 
@@ -30,11 +36,15 @@ const handleContactSubmission = async (req, res) => {
     }
     
     // Extract validated data
-    const { recipient, subject, message } = req.body;
+    const { recipient, messageType, subject, message } = req.body;
+    console.log(req.body);
+
+    sentBy = req.session.user;
+
 
     try {
         // Save to database
-        await createContactForm(recipient, subject, message);
+        await createContactForm(recipient, messageType, subject, message, sentBy);
         req.flash('success', 'Thanks for contacting us! You can look forward to our response soon.');
         res.redirect('/contact/responses');
     } catch (error) {

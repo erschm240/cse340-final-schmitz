@@ -41,7 +41,7 @@ const app = express();
 /**
  * Configure express session
  */
-// Iniitalize PostgreSQL session store
+// Initialize PostgreSQL session store
 const pgSession = connectPgSimple(session);
 
 // Configure session middleware
@@ -49,7 +49,7 @@ app.use(session({
     store: new pgSession({
         conObject: {
             connectionString: process.env.DB_URL,
-            // Configure SSL for session store connection
+            // Configure SSL for session store connection (required by BYU-I databases)
             ssl: {
                 ca: caCert,
                 rejectUnauthorized: true,
@@ -65,7 +65,7 @@ app.use(session({
     cookie: {
         secure: NODE_ENV.includes('dev') !== true,
         httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+        maxAge: 24 * 60 * 60 * 1000
     }
 }));
 
@@ -111,6 +111,8 @@ app.use((err, req, res, next) => {
     if (res.headersSent || res.finished) {
         return next(err);
     }
+
+    console.error('Original error:', err);
 
     // Determine status and template
     const status = err.status || 500;

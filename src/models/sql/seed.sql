@@ -95,7 +95,7 @@ INSERT INTO roles (role_name, role_description) VALUES
     ('admin', 'Administrator with full system access (full CRUD privileges), make changes to website and to tutorials, view and respond to all messages, may also react to tutorials but unlikely');
 
 INSERT INTO users (name, username, email, password_hash, role_id) VALUES
-    ('Ava Grace', 'gracethedog', 'admin1@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
+    ('Ava Grace', 'gracethedog', 'admin1@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 3),
     ('Emily Johnson', 'emilyknits1234', 'instructor1@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
     ('Amber Brown', 'crazycrochet89', 'instructor2@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
     ('Jennifer Clarke', 'jenniferclarke77', 'instructor3@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),

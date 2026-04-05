@@ -104,6 +104,25 @@ h1 {
         .value {
             margin-top: 0.4rem;
         }
+
+        .user-actions {
+            display: flex;
+
+            .action-button {
+                width: fit-content;
+                padding: 0.5rem;
+                background-color: var(--dark-purple);
+                border: none;
+                border-radius: 8px;
+                color: var(--off-white);
+                font-size: 1rem;
+                font-family: var(--paragraph-font);
+                font-weight: bold;
+                cursor: pointer;
+                text-decoration: none;
+                margin: 0 1rem 0 0;
+            }
+        }
     }
 
     .no-responses {

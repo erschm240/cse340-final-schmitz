@@ -8,27 +8,23 @@ import { getAllPossibleRecipients } from '../../models/forms/contact.js';
 const contactValidation = [
     body('recipient')
         .trim()
-        .matches(/^[a-zA-Z0-9\s\-.,!?]+$/)
-        .withMessage('Subject contains invalid characters')
-        .custom((value) => {
-            const recipients = async () => await getAllPossibleRecipients();
-            const checkIfExists = recipients.includes(value);
+        .custom(async (value) => {
+            const recipients = await getAllPossibleRecipients();
+            const checkIfExists = recipients.some((recipient) => recipient.name === value);
             if (!checkIfExists) {
                 throw new Error('Must be a valid recipient from the list');
             }
-            return false;
+            return true;
         }),
-    body('messageType')
+    body('message-type')
         .trim()
-        .matches(/^[a-zA-Z0-9\s\-.,!?]+$/)
-        .withMessage('Subject contains invalid characters')
         .custom((value) => {
-            const messageTypes = ['Mistake in Tutorial', 'Error on Site', 'Tutorial Suggestion', 'Site Feature Suggestion'];
+            const messageTypes = ['Mistake in Tutorial', 'New Tutorial Suggestion', 'Tutorial Question', 'Error on Site', 'Site Question'];
             const checkIfExists = messageTypes.includes(value);
             if (!checkIfExists) {
                 throw new Error('Must be a valid message type from the list');
             }
-            return false;
+            return true;
             }),
     body('subject')
         .trim()
@@ -132,6 +128,8 @@ const commentValidation = [
         .trim()
         .isLength({ min: 10, max: 2000 })
         .withMessage('Message must be between 10 and 2000 characters')
+        .matches(/^[a-zA-Z0-9\s\-.,!?]+$/)
+        .withMessage('Message contains invalid characters')
         .custom((value) => {
             // Check for spam patterns (excessive repetition)
             const words = value.split(/\s+/);

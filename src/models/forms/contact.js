@@ -29,7 +29,7 @@ const getAllContactForms = async () => {
 
 const getAllPossibleRecipients = async () => {
     const query = `
-        SELECT name, username
+        SELECT name
         FROM users
         WHERE role_id = 2 OR role_id = 3
     `;

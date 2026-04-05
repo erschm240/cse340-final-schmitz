@@ -10,7 +10,7 @@ const router = Router();
  */
 const contactFormPage = async (req, res) => {
     const recipients = await getAllPossibleRecipients();
-    const messageTypes = ['Mistake in Tutorial', 'Error on Site', 'Tutorial Suggestion', 'Site Feature Suggestion'];
+    const messageTypes = ['Mistake in Tutorial', 'New Tutorial Suggestion', 'Tutorial Question', 'Error on Site', 'Site Question'];
 
     res.render('forms/contact/form', {
         title: 'Contact a Site Member',
@@ -35,7 +35,7 @@ const handleContactSubmission = async (req, res) => {
     }
     
     // Extract validated data
-    const { recipient, messageType, subject, message } = req.body;
+    const { recipient, 'message-type': messageType, subject, message } = req.body;
     console.log(req.body);
 
     const sentBy = req.session.user;

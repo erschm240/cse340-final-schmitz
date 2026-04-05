@@ -8,14 +8,16 @@
             <div>
                 <label for="recipient">Recipient:</label>
                 <select name="recipient" id="recipient">
+                    <option value="" disabled selected>Select a recipient</option>
                     <% Object.values(recipients).forEach(recipient => { %>
-                        <option value="<%= recipient.username %>"><%= recipient.username %>/<%= recipient.name %></option>
+                        <option value="<%= recipient.name %>"><%= recipient.name %></option>
                     <% }); %>
                 </select>
             </div>
             <div>
                 <label for="message-type">Message Type:</label>
                 <select name="message-type" id="message-type">
+                    <option value="" disabled selected>Select a type</option>
                     <% messageTypes.forEach(messageType => { %>
                         <option value="<%= messageType %>"><%= messageType %></option>
                     <% }); %>

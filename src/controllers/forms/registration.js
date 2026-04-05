@@ -101,7 +101,7 @@ const displayEditAccountForm = async (req, res) => {
     }
 
     // Check permissions
-    const canEdit = currentUser.id === targetUserId || currentUser.roleName === 'admin';
+    const canEdit = currentUser.userId === targetUserId || currentUser.roleName === 'admin';
 
     if (!canEdit) {
         req.flash('error', 'You do not have permission to edit this account');
@@ -140,7 +140,7 @@ const processEditAccount = async (req, res) => {
         }
 
         // Check permissions
-        const canEdit = currentUser.id === targetUserId || currentUser.roleName === 'admin';
+        const canEdit = currentUser.userId === targetUserId || currentUser.roleName === 'admin';
 
         if (!canEdit) {
             req.flash('error', 'You do not have permission to edit this account.');
@@ -188,7 +188,7 @@ const processDeleteAccount = async (req, res) => {
     }
 
     // Prevent admins from deleting their own account
-    if (currentUser.id === targetUserId) {
+    if (currentUser.userId === targetUserId) {
         req.flash('error', 'You cannot delete your own account');
         return res.redirect('/register/list');
     }
@@ -199,7 +199,7 @@ const processDeleteAccount = async (req, res) => {
         if (deleted) {
             req.flash('success', ' User account deleted successfully');
         } else {
-            req.flash('error', 'Usernot found or already deleted');
+            req.flash('error', 'User not found or already deleted');
         }
     } catch (error) {
         console.error('Error deleting user: ', error);

@@ -56,7 +56,7 @@ const handleCommentSubmission = async (req, res) => {
         // Save to database
         await createTutorialComment(sentBy, message, postedIn);
         // No flash msg since they will see the comment
-        res.redirect(`${tutorialSlug}`);
+        res.redirect(`${tutorialSlug}/#tutorial-comments`);
     } catch (error) {
         console.error('Error posting comment: ', error);
         req.flash('error', 'Unable to comment. Please try again later.');

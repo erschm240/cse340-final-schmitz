@@ -75,7 +75,7 @@ const updateUser = async (id, name, username, email) => {
         UPDATE users
         SET name = $1, username = $2, email = $3, updated_at = CURRENT_TIMESTAMP
         WHERE user_id = $4
-        RETURNING id, name, username, email, updated_at
+        RETURNING user_id, name, username, email, updated_at
     `;
     const result = await db.query(query, [name, username, email, id]);
     return result.rows[0] || null;

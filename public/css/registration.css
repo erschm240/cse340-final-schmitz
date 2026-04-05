@@ -57,22 +57,6 @@ h1 {
             color: var(--dark-purple);
             margin-top: 0.25rem;
         }
-
-    .submit-button {
-        width: 80%;
-        display: flex;
-        justify-self: center;
-        justify-content: center;
-        padding: 1rem;
-        background-color: var(--dark-purple);
-        border: none;
-        border-radius: 8px;
-        color: var(--off-white);
-        font-size: 1rem;
-        font-family: var(--paragraph-font);
-        font-weight: bold;
-        cursor: pointer;
-    }
 }
 
 /* Registered users styles */
@@ -132,3 +116,69 @@ h1 {
         padding: 2rem;
     }
 }
+
+/* Edit user styles */
+.edit-form {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 8px;
+    background-color: var(--light-purple);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.8rem;
+        font-size: 1.3rem;
+        font-weight: bold;
+        font-family: var(--header-font);
+        color: var(--dark-gray);
+    }
+
+    input {
+        width: 100%;
+        padding: 0.75rem;
+        box-sizing: border-box;
+        border: 1px solid var(--medium-purple);
+        border-radius: 8px;
+        font-size: 1rem;
+        font-family: var(--paragraph-font);
+        background-color: var(--off-white);
+        transition: border-color 0.3s ease;
+
+        &:focus {
+            outline: none;
+            border-color: var(--dark-purple);
+        }
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+}
+
+/* Submit button style alone because there are multiple */
+/* Cancel button added for simplicity */
+.submit-button, .cancel-button {
+        width: fit-content;
+        display: flex;
+        justify-self: center;
+        justify-content: center;
+        padding: 1rem;
+        background-color: var(--dark-purple);
+        border: none;
+        border-radius: 8px;
+        color: var(--off-white);
+        font-size: 1rem;
+        font-family: var(--paragraph-font);
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+    }

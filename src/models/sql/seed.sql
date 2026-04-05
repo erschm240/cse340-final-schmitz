@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS roles (
 CREATE TABLE IF NOT EXISTS users (
     user_id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    username VARCHAR(100) NOT NULL,
+    username VARCHAR(100) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     role_id INTEGER REFERENCES roles(role_id) DEFAULT 1,
@@ -76,9 +76,9 @@ CREATE TABLE IF NOT EXISTS tutorial_steps (
 -- Create tutorial comment table
 CREATE TABLE IF NOT EXISTS tutorial_comments (
     id SERIAL PRIMARY KEY,
-    sent_by VARCHAR(255) NOT NULL,
+    sent_by VARCHAR(255) REFERENCES users(username),
     message TEXT NOT NULL,
-    posted_in VARCHAR(200) NOT NULL,
+    posted_in VARCHAR(200) REFERENCES tutorials(slug),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

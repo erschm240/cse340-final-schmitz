@@ -126,8 +126,8 @@ const loginValidation = [
 const commentValidation = [
     body('message')
         .trim()
-        .isLength({ min: 10, max: 2000 })
-        .withMessage('Message must be between 10 and 2000 characters')
+        .isLength({ min: 2, max: 1000 })
+        .withMessage('Message must be between 2 and 1000 characters')
         .matches(/^[a-zA-Z0-9\s\-.,!?]+$/)
         .withMessage('Message contains invalid characters')
         .custom((value) => {

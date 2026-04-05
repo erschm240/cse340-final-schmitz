@@ -65,7 +65,7 @@ a {
         }
 
     .submit-button {
-        width: 80%;
+        width: fit-content;
         display: flex;
         justify-self: center;
         justify-content: center;

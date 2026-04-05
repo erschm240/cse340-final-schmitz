@@ -2,24 +2,26 @@
 <main>
     <h1><%= title %></h1>
 
-    <form method="post" action="/register/<%= user.userId %>/edit">
-        <div>
+    <form method="post" action="/register/<%= user.userId %>/edit" class="edit-form">
+        <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" value="<%= user.name %>" required>
         </div>
 
-        <div>
+        <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" value="<%= user.username %>" required>
         </div>
 
-        <div>
+        <div class="form-group">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" value="<%= user.email %>" required>
         </div>
 
-        <button type="submit">Update Account</button>
-        <a href="/register/list">Cancel Edit</a>
+        <div class="buttons">
+            <button type="submit" class="submit-button">Update Account</button>
+            <a href="/register/list" class="cancel-button">Cancel Edit</a>
+        </div>
     </form>
 </main>
 <%- include('../../partials/footer') %>

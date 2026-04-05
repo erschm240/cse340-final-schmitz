@@ -5,7 +5,7 @@
     <div class="instructor-list">
         <% Object.values(instructors).forEach(instructor => { %>
             <div class="instructor-card">
-                <img src="<%= instructor.imgFileType %>" class="instructor-img" alt="Profile picture for <%= instructor.name %>">
+                <img src="/images/instructors/<%= instructor.slug %>.<%= instructor.imgFileType %>" class="instructor-img" alt="Profile picture for <%= instructor.name %>">
                 <div class="card-details">
                     <h2><%= instructor.name %></a></h2>
                     <h3><%= instructor.username %></h3>

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { body, validationResult } from 'express-validator';
+import { validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 import { requireLogin } from '../../middleware/auth.js';
 import { registrationValidation, editAccountValidation } from '../../middleware/validation/forms.js';

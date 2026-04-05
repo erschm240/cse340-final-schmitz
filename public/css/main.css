@@ -101,6 +101,12 @@ footer {
     border-radius: 8px;
 }
 
+.session-debug {
+    background-color: var(--light-purple);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
 .dashboard-actions {
     display: flex;
     justify-content: center;

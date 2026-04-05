@@ -1,9 +1,35 @@
 import { body } from 'express-validator';
+import { getAllPossibleRecipients } from '../../models/forms/contact.js';
 
 /**
  * Validation rules for contact form
  */
+
 const contactValidation = [
+    body('recipient')
+        .trim()
+        .matches(/^[a-zA-Z0-9\s\-.,!?]+$/)
+        .withMessage('Subject contains invalid characters')
+        .custom((value) => {
+            const recipients = async () => await getAllPossibleRecipients();
+            const checkIfExists = recipients.includes(value);
+            if (!checkIfExists) {
+                throw new Error('Must be a valid recipient from the list');
+            }
+            return false;
+        }),
+    body('messageType')
+        .trim()
+        .matches(/^[a-zA-Z0-9\s\-.,!?]+$/)
+        .withMessage('Subject contains invalid characters')
+        .custom((value) => {
+            const messageTypes = ['Mistake in Tutorial', 'Error on Site', 'Tutorial Suggestion', 'Site Feature Suggestion'];
+            const checkIfExists = messageTypes.includes(value);
+            if (!checkIfExists) {
+                throw new Error('Must be a valid message type from the list');
+            }
+            return false;
+            }),
     body('subject')
         .trim()
         .isLength({ min: 2, max: 255 })

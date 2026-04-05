@@ -18,6 +18,26 @@ h1 {
         margin-bottom: 1.5rem;
     }
 
+    .selects {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    select {
+        padding: 0.75rem;
+        border-radius: 8px;
+        border: 1px solid var(--medium-purple);
+        font-size: 1rem;
+        font-family: var(--paragraph-font);
+        background-color: var(--off-white);
+        transition: border-color 0.3s ease;
+
+        &:focus {
+            outline: none;
+            border-color: var(--dark-purple);
+        }
+    }
+
     label {
         display: block;
         margin-bottom: 0.8rem;

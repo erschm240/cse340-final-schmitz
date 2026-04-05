@@ -22,6 +22,11 @@
                     <span class="value"><%= new Date(user.createdAt).toLocaleDateString() %></span>
                 </p>
             </div>
+            <h2>Session Information</h2>
+            <!-- Relevant operatinal data, only for admin -->
+            <div class="session-debug">
+                <pre><%= JSON.stringify(sessionData, null, 2) %></pre>
+            </div>
             <div class="dashboard-actions">
                 <a href="/logout" class="logout-button">Logout</a>
             </div>

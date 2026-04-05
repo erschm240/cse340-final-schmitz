@@ -60,7 +60,7 @@ const getUserById = async (id) => {
             users.created_at AS "createdAt",
             roles.role_name AS "roleName"
         FROM users
-        INNER JOIN roles ON users.role_id = roles.id
+        INNER JOIN roles ON users.role_id = roles.role_id
         WHERE users.user_id = $1
     `;
     const result = await db.query(query, [id]);

@@ -10,7 +10,6 @@ const router = Router();
  */
 const contactFormPage = async (req, res) => {
     const recipients = await getAllPossibleRecipients();
-    console.log(recipients);
     const messageTypes = ['Mistake in Tutorial', 'Error on Site', 'Tutorial Suggestion', 'Site Feature Suggestion'];
 
     res.render('forms/contact/form', {
@@ -39,7 +38,7 @@ const handleContactSubmission = async (req, res) => {
     const { recipient, messageType, subject, message } = req.body;
     console.log(req.body);
 
-    sentBy = req.session.user;
+    const sentBy = req.session.user;
 
 
     try {

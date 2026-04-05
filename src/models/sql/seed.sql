@@ -84,9 +84,9 @@ CREATE TABLE IF NOT EXISTS tutorial_comments (
 
 -- Insert instructors
 INSERT INTO instructors (slug, name, username, img_file_type, biography_text) VALUES
-    ('emily-johnson', 'Emily Johnson', 'emilyknits1234', '/images/instructors/emily-johnson.jpg', 'Hi! I’m Emily and I’ve been knitting for 5 years. I love sharing my knowledge with others.'),
-    ('amber-brown', 'Amber Brown', 'crazycrochet89', '/images/instructors/amber-brown.jpg', 'Hi! I’m Amber and I’ve been crocheting for 8 years. I enjoy creating cute amigurumi stuffed animals!'),
-    ('jennifer-clarke', 'Jennifer Clarke', 'craftingwithjennifer54', '/images/instructors/jennifer-clarke.jpg', 'Hi! I’m Jennifer and I’ve been knitting for 7 years. My favorite activity is working on a new sweater while rewatching TV shows and movies.');
+    ('emily-johnson', 'Emily Johnson', 'emilyknits1234', 'jpg', 'Hi! I’m Emily and I’ve been knitting for 5 years. I love sharing my knowledge with others.'),
+    ('amber-brown', 'Amber Brown', 'crazycrochet89', 'jpg', 'Hi! I’m Amber and I’ve been crocheting for 8 years. I enjoy creating cute amigurumi stuffed animals!'),
+    ('jennifer-clarke', 'Jennifer Clarke', 'craftingwithjennifer54', 'jpg', 'Hi! I’m Jennifer and I’ve been knitting for 7 years. My favorite activity is working on a new sweater while rewatching TV shows and movies.');
 
 -- Insert user roles
 INSERT INTO roles (role_name, role_description) VALUES
@@ -95,11 +95,11 @@ INSERT INTO roles (role_name, role_description) VALUES
     ('admin', 'Administrator with full system access (full CRUD privileges), make changes to website and to tutorials, view and respond to all messages, may also react to tutorials but unlikely');
 
 INSERT INTO users (name, username, email, password_hash, role_id) VALUES
-    ('Ava Grace', 'gracethedog', 'admin@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
-    ('Emily Johnson', 'emilyknits1234', 'instructor@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
-    ('Amber Brown', 'crazycrochet89', 'instructor@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
-    ('Jennifer Clarke', 'jenniferclarke77', 'instructor@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
-    ('Molly Weaver', 'knittinggremlin77', 'user@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 1);
+    ('Ava Grace', 'gracethedog', 'admin1@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
+    ('Emily Johnson', 'emilyknits1234', 'instructor1@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
+    ('Amber Brown', 'crazycrochet89', 'instructor2@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
+    ('Jennifer Clarke', 'jenniferclarke77', 'instructor3@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
+    ('Molly Weaver', 'knittinggremlin77', 'user1@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 1);
 
 -- Insert tutorials
 INSERT INTO tutorials (slug, title, description, author) VALUES
@@ -110,7 +110,7 @@ INSERT INTO tutorials (slug, title, description, author) VALUES
 
 -- Insert tutorial steps
 INSERT INTO tutorial_steps (step_order, slug, img_file_type, text_content) VALUES
-    (1, 'cast-on-knit', '/images/cast-on-knit', 'Create a slipknot with a long tail (enough length to make the amount of stitches you need).'),
+    (1, 'cast-on-knit', 'jpg', 'Create a slipknot with a long tail (enough length to make the amount of stitches you need).'),
     (2, 'cast-on-knit', 'jpg', 'Slide the slipknot loop on your knitting needle. Make sure the tail is “facing” you (best shown in the image), on the front side of the needle (the side you are closest to). The working yarn (the end of the yarn that leads into the yarn ball) should be on the opposite side.'),
     (3, 'cast-on-knit', 'jpg', 'Hold the needle in one hand and with the other, facing palm-down, put your pointer finger and thumb in between the two yarn strands. Hold both of them with your bottom three fingers. '),
     (4, 'cast-on-knit', 'jpg', 'Now twist your hand up to the left, so your palm is not fully up, but angled up and facing towards the right. Now you are ready to cast on loops.'),

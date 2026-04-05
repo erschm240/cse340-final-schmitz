@@ -12,13 +12,22 @@ const caCert = fs.readFileSync(path.join(__dirname, '../../bin', 'byuicse-psql-c
 /**
  * Conection pool for PostgreSQL database
  */
+console.log('db.js module initialized');
 const pool = new Pool({
     connectionString: process.env.DB_URL,
     ssl: {
         ca: caCert,
         rejectUnauthorized: true,
         checkServerIdentity: () => { return undefined; }
-    }
+    },
+    max: 3,
+    min: 1,
+    idleTimeoutMillis: 10000,
+    connectionTimeoutMillis: 2000
+});
+
+pool.on('connect', () => { 
+    console.log('New client connected to the pool');
 });
 
 /**
@@ -61,4 +70,4 @@ if (process.env.NODE_ENV.includes('dev') && process.env.ENABLE_SQL_LOGGING === '
 }
 
 export default db;
-export { caCert };
+export { db, caCert };

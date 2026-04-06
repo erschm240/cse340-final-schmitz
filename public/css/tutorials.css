@@ -101,7 +101,7 @@ h1 {
         padding: 0.2rem 1rem;
         font-family: var(--paragraph-font);
         color: var(--dark-gray);
-        margin: 0;
+        margin: 1rem 0;
         font-size: 1rem;
         display: grid;
         align-content: center;

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
-import { requireLogin } from '../../middleware/auth.js';
+import { requireLogin, requireRole } from '../../middleware/auth.js';
 import { registrationValidation, editAccountValidation } from '../../middleware/validation/forms.js';
 import {
     emailExists,
@@ -222,7 +222,7 @@ router.post('/', registrationValidation, processRegistration);
 /**
  * GET /registration/list - Display all registered users
  */
-router.get('/list', displayAllUsers);
+router.get('/list', requireLogin, requireRole(['admin']), displayAllUsers);
 
 /**
  * GET register/:id/edit - Display the edit account form

@@ -19,11 +19,31 @@ const createContactForm = async (recipient, messageType, subject, message, sentB
 
 const getAllContactForms = async () => {
     const query = `
-        SELECT id, recipient, message_type, subject, message, sent_by, submitted
+        SELECT id, recipient, message_type, subject, message, sent_by, submitted, status
         FROM contact_form
         ORDER BY submitted DESC
     `;
     const result = await db.query(query);
+    return result.rows;
+};
+
+const getContactFormsByRecipient = async (recipient) => {
+    const query = `
+        SELECT id, recipient, message_type, subject, message, sent_by, submitted, status
+        FROM contact_form
+        WHERE recipient = $1
+    `;
+    const result = await db.query(query, [recipient]);
+    return result.rows;
+};
+
+const getContactFormsBySentBy = async (sentBy) => {
+    const query = `
+        SELECT id, recipient, message_type, subject, message, sent_by, submitted, status
+        FROM contact_form
+        WHERE sent_by = $1
+    `;
+    const result = await db.query(query, [sentBy]);
     return result.rows;
 };
 
@@ -37,4 +57,4 @@ const getAllPossibleRecipients = async () => {
     return result.rows;
 }
 
-export { createContactForm, getAllContactForms, getAllPossibleRecipients };
+export { createContactForm, getAllContactForms, getContactFormsByRecipient, getContactFormsBySentBy, getAllPossibleRecipients };

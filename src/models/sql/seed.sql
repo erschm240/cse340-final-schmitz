@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS contact_form (
     subject VARCHAR(255) NOT NULL,
     message TEXT NOT NULL,
     sent_by VARCHAR(255) NOT NULL,
-    submitted TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    submitted TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(10) DEFAULT 'Received'
 );
 
 -- Create instructors table
@@ -98,7 +99,7 @@ INSERT INTO users (name, username, email, password_hash, role_id) VALUES
     ('Ava Grace', 'gracethedog', 'admin1@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 3),
     ('Emily Johnson', 'emilyknits1234', 'instructor1@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
     ('Amber Brown', 'crazycrochet89', 'instructor2@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
-    ('Jennifer Clarke', 'jenniferclarke77', 'instructor3@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
+    ('Jennifer Clarke', 'jenniferclarke29', 'instructor3@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 2),
     ('Molly Weaver', 'knittinggremlin77', 'user1@example.com', '$2b$10$lQDOF8sILTLKu2L26zSViuzDI3YMBDhoL3lEFInD.i2nRrtTN0osC', 1);
 
 -- Insert tutorials
@@ -134,5 +135,11 @@ INSERT INTO tutorial_steps (step_order, slug, img_file_type, text_content) VALUE
     (1, 'slipknot', 'jpg', 'Pull out as much yarn as you need in the tail, then drape it over your finger (likely your pointer, but whichever one you will wrap the yarn around) with the tail end in the front. If you are holding your hand with your palm facing you, it should be on the palm side of your hand. Then wrap the yarn behind you (leading to the yarn ball) around your finger twice, going behind your finger, then bringing it up to the front. '),
     (2, 'slipknot', 'jpg', 'There should be two loops on your finger now. Take the loop on the left and pull it until it rests over the right loop, but don’t slide it off your finger. It is now the right loop, crossing over the second loop.'),
     (3, 'slipknot', 'jpg', 'Now take the new left loop and pull it over the new right loop. This one you will slide off your finger. Pull tight from either the loop on your finger or the yarn strands below, both will work.');
+
+INSERT INTO tutorial_comments (sent_by, message, posted_in) VALUES
+    ('knittinggremlin77', 'Super helpful, thank you!', 'cast-on-knit'),
+    ('knittinggremlin77', 'This was fun to do!', 'cast-on-crochet'),
+    ('jenniferclarke29', 'Thanks for making this, I have been wanting to learn how to crochet.', 'cast-on-crochet'),
+    ('emilyknits1234', 'I love stockinette!', 'knit-stitch');
 
 COMMIT;

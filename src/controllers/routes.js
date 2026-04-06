@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { homePage } from './index.js';
 import { tutorialListPage, tutorialDetailsPage, handleCommentSubmission } from './tutorials/tutorials.js';
-import { instructorListPage, instructorDetailsPage } from './instructors/instructors.js';
-import { processLogout, displayDashboard } from './forms/login.js';
-import { requireLogin } from '../middleware/auth.js';
+import { instructorListPage } from './instructors/instructors.js';
+import { processLogout } from './forms/login.js';
 import contactRoutes from './forms/contact.js';
 import registrationRoutes from './forms/registration.js';
 import loginRoutes from './forms/login.js';
+import dashboardRoutes from './dashboard/dashboard.js';
 import { commentValidation } from '../middleware/validation/forms.js';
 
 // Create a new router instance
@@ -53,7 +53,6 @@ router.post('/tutorials/:tutorialSlug', commentValidation, handleCommentSubmissi
 
 // Instructor routes
 router.get('/instructors', instructorListPage);
-router.get('/instructors/:instructorSlug', instructorDetailsPage);
 
 // Contact routes
 router.use('/contact', contactRoutes);
@@ -66,6 +65,7 @@ router.use('/login', loginRoutes);
 
 // Authentication related routes
 router.get('/logout', processLogout);
-router.get('/dashboard', requireLogin, displayDashboard);
+
+router.use('/dashboard', dashboardRoutes);
 
 export default router;

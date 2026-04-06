@@ -1,0 +1,33 @@
+<%- include('../partials/header') %>
+<main>
+    <div class="dashboard">
+        <h1><%= title %></h1>
+        <div class="user-info">
+            <h2>Management Links</h2>
+            <div>
+                <a href="/register/list">Users</a>
+                <a href="/responses">Your Contact Messages</a>
+            </div>
+            <h2>Account Information</h2>
+            <div class="user-detail">
+                <p>
+                    <span class="label">Name:</span>
+                    <span class="value"><%= user.name %></span>
+                </p>
+                <p>
+                    <span class="label">Email:</span>
+                    <span class="value"><%= user.email %></span>
+                </p>
+                <p>
+                    <span class="label">Role:</span>
+                    <span class="value"><%= user.roleName %></span>
+                </p>
+                <p>
+                    <span class="label">Date Created:</span>
+                    <span class="value"><%= new Date(user.createdAt).toLocaleDateString() %></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+<%- include('../partials/footer') %>

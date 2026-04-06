@@ -49,8 +49,19 @@ const processLogin = async (req, res) => {
 
         req.session.user = user;
 
+        const sessionData = req.session;
+
+        if (user && user.password) {
+            console.error('Security error: password found in user object');
+            delete user.password;
+        }
+        if (sessionData.user && sessionData.user.password) {
+            console.error('Security error: password found in sessionData.user');
+            delete sessionData.user.password;
+        }
+
         req.flash('success', `Welcome, ${user.name}!`);
-        res.redirect('/dashboard');
+        res.redirect('/');
 
     } catch (error) {
         console.error('Error during login: ', error);
@@ -81,7 +92,7 @@ const processLogout = (req, res) => {
             /**
              * Send a 500 error
              */
-            res.status(500).send('Error logging out');
+            return res.status(500).send('Error logging out');
         }
 
         // If session destruction succeeded, clear the session cookie from the browser
@@ -92,34 +103,10 @@ const processLogout = (req, res) => {
     });
 };
 
-/**
- * Display protected dashboard
- */
-const displayDashboard = (req, res) => {
-    const user = req.session.user;
-    const sessionData = req.session;
-
-    // Ensure user and sessionData do not contain password field
-    if (user && user.passwordHash) {
-        console.error('Security error: password found in user object');
-        delete user.passwordHash;
-    }
-    if (sessionData.user && sessionData.user.passwordHash) {
-        console.error('Security error: password found in sessionData.user');
-        delete sessionData.user.passwordHash;
-    }
-
-    res.render('dashboard', {
-        title: 'Dashboard',
-        user,
-        sessionData
-    });
-};
-
 // Routes
 router.get('/', displayLoginForm);
 router.post('/', loginValidation, processLogin);
 
 // Export router as default, and specific functions for root-level routes
 export default router;
-export { processLogout, displayDashboard };
+export { processLogout };

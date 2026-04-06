@@ -42,8 +42,10 @@ const addLocalVariables = (req, res, next) => {
 
     // Convenience variable for UI based on session state
     res.locals.isLoggedIn = false;
+    res.locals.userRole = null;
     if (req.session && req.session.user) {
         res.locals.isLoggedIn = true;
+        res.locals.userRole = req.session.user.roleName;
     }
     
     next();

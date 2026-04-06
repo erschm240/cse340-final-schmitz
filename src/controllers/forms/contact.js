@@ -2,6 +2,7 @@ import { Router } from "express";
 import { validationResult } from "express-validator";
 import { createContactForm, getAllContactForms, getAllPossibleRecipients } from "../../models/forms/contact.js";
 import { contactValidation } from "../../middleware/validation/forms.js";
+import { requireLogin, requireRole } from "../../middleware/auth.js";
 
 const router = Router();
 
@@ -84,6 +85,6 @@ router.post('/', contactValidation, handleContactSubmission);
 /**
  * GET /contact/responses - Display all contact form submissions
  */
-router.get('/responses', displayContactResponses);
+router.get('/responses', requireLogin, requireRole(['admin']), displayContactResponses);
 
 export default router;

@@ -17,7 +17,7 @@ const requireLogin = (req, res, next) => {
  * Middleware to require specific roles for route access
  * Returns middleware that checks if the user has the required role
  * 
- * @param {string} roleName - The role name required
+ * @param {array} roleName - The role name(s) required
  * @returns {Function} Express middleware function
  */
 const requireRole = (roleName) => {
@@ -29,12 +29,13 @@ const requireRole = (roleName) => {
         }
 
         // Check if user's role matches the required role
-        if (req.session.user.roleName !== roleName) {
+        if (!roleName.includes(req.session.user.roleName)) {
             req.flash('error', 'You do not have permission to access this page');
             return res.redirect('/');
         }
 
         // User has required role, continue
+        next();
     };
 };
 

@@ -9,8 +9,8 @@
 
 # User Roles:
 - Admin: create, view, update, and delete any site data, full access to database, view, update, and delete any user except themselves
-- Instructor: create, view, edit, and delete tutorials THEY create, view and respond to contact forms addressed to them, submit a comment on a tutorial, submit contact forms, view and update their own user profile, view instructor page and edit their own bio
-- User: view site tutorials and submit comments, submit contact form or application to be instructor, view and edit their own profile, view instructor page
+- Instructor: view, edit, and delete tutorials THEY create, view and respond to contact forms addressed to them, submit a comment on a tutorial, submit contact forms, view and update their own user profile, view instructor page
+- User: view site tutorials and submit comments, view and edit their own profile, view instructor page
 
 # Test Account Credentials (all passwords are the one required in the project requirement document):
 - (Role: Name, email to login with)
@@ -20,4 +20,6 @@
 
 # Known Limitations
 - Did not get to implement dark mode
-- At the time of submission for the assignment not all role features have been implemented but that should change before the meeting
+- No form to create a tutorial
+- No application to be an instructor
+- Sometimes 404 error loads when the app starts but the app loads fine

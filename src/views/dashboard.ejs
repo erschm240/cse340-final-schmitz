@@ -178,11 +178,9 @@
             <% } %>
                 <% if ( user.roleName === 'admin' || user.roleName === 'instructor') { %>
                     <h2>Received Comments</h2>
-                <% } else { %>
-                    <h2>Posted Comments</h2>
                 <% } %>
                 <div class="comments">
-                    <% if (dashboardContent.tutorialComments.length == 0) { %>
+                    <% if (dashboardContent.tutorialComments.length == 0 || !dashboardContent.postedComments) { %>
                         <div class="no-comments">
                             <p>No comments to display.</p>
                         </div>
@@ -209,11 +207,11 @@
                                                 <span class="value"><%= comment.message %></span>
                                             </p>
                                             <div class="user-actions">
-                                                <% if (user.roleName === 'admin' || user.roleName === 'instructor') { %>
-                                                    <a href="/tutorials/<%= comment.id %>/edit" class="action-button">Edit</a>
+                                                <% if (user.username == comment.sentBy) { %>
+                                                    <a href="/tutorials/<%= comment.id %>/edit-comment" class="action-button">Edit</a>
                                                 <% } %>
-                                                <% if (user.roleName === 'admin' || user.roleName === 'instructor') { %>
-                                                    <form method="post" action="/tutorials/<%= comment.id %>/delete" style="display: inline;">
+                                                <% if (user.roleName === 'admin' || user.username == comment.sentBy) { %>
+                                                    <form method="post" action="/tutorials/<%= comment.id %>/delete-comment" style="display: inline;">
                                                         <button type="submit" onclick="return confirm('Are you sure you want to delete this comment?')" class="action-button">Delete</button>
                                                     </form>
                                                 <% } %>
@@ -223,8 +221,13 @@
                                 <% }); %> <!-- Foreach comment -->
                             <% }); %> <!-- Foreach tutorial -->
                         <% } %> <!-- Permissions -->
-                        <% if (user.roleName === 'user') { %> <!-- Permissions -->
-                            <% Object.values(dashboardContent.tutorialComments).forEach(comment => { %> <!-- Foreach comment -->
+                        <h2>Posted Comments</h2>
+                        <% if (!dashboardContent.postedComments) { %> <!-- Comment object length -->
+                            <div class="no-comments">
+                                <p>No comments to display.</p>
+                            </div>
+                        <% } else { %>
+                            <% Object.values(dashboardContent.postedComments).forEach(comment => { %> <!-- Foreach comment -->
                                 <% if (comment.sentBy === user.username) { %> <!-- sentBy -->
                                     <div class="comment">
                                         <p>
@@ -244,19 +247,17 @@
                                             <span class="value"><%= comment.message %></span>
                                         </p>
                                         <div class="user-actions">
-                                            <% if (user.roleName === 'admin' || user.roleName === 'instructor') { %>
-                                                <a href="/tutorials/<%= comment.id %>/edit" class="action-button">Edit</a>
-                                            <% } %>
-                                            <% if (user.roleName === 'admin' || user.roleName === 'instructor') { %>
-                                                <form method="post" action="/tutorials/<%= comment.id %>/delete" style="display: inline;">
+                                            <% if (user.roleName === 'admin' || user.username == comment.sentBy) { %>
+                                                <a href="/tutorials/<%= comment.id %>/edit-comment" class="action-button">Edit</a>
+                                                <form method="post" action="/tutorials/<%= comment.id %>/delete-comment" style="display: inline;">
                                                     <button type="submit" onclick="return confirm('Are you sure you want to delete this comment?')" class="action-button">Delete</button>
                                                 </form>
                                             <% } %>
                                         </div>
                                     </div>
                                 <% } %> <!-- SentBy -->
-                                <% }); %> <!-- Foreach comment -->
-                        <% } %> <!-- Permissions -->
+                            <% }); %> <!-- Foreach comment -->
+                        <% } %> <!-- Comment object length -->
                     <% } %> <!-- Else Statement -->
                 </div>
             <% if (user.roleName === 'admin') { %>

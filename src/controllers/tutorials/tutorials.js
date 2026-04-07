@@ -1,5 +1,5 @@
 import { validationResult } from 'express-validator';
-import { getAllTutorials, getTutorialBySlug, getTutorialSteps,  getTutorialComments, createTutorialComment, updateTutorial, deleteTutorial, deleteTutorialSteps, deleteTutorialComments } from '../../models/tutorials/tutorials.js';
+import { getAllTutorials, getTutorialBySlug, getTutorialSteps,  getTutorialComments, createTutorialComment, updateTutorial, deleteTutorial, deleteTutorialSteps, deleteTutorialComments, getTutorialCommentById, updateComment, deleteComment } from '../../models/tutorials/tutorials.js';
 
 // Route handler for tutorial list page
 const tutorialListPage = async (req, res) => {
@@ -66,7 +66,16 @@ const handleCommentSubmission = async (req, res) => {
 
 const displayEditTutorial = async (req, res) => {
     const tutorialSlug = req.params.tutorialSlug;
+    const userRole = req.session.user.roleName;
     const tutorial = await getTutorialBySlug(tutorialSlug);
+    const currentUser = req.session.user.name;
+    const targetUser = tutorial.author;
+    console.log('INSTRUCTOR', currentUser, targetUser);
+
+    if (currentUser !== targetUser && userRole !== 'admin') {
+        req.flash('error', 'You do not have permission to edit this tutorial');
+        return res.redirect('/dashboard');
+    }
 
     res.render('tutorials/edit', {
         title: 'Edit Tutorial Text',
@@ -78,6 +87,9 @@ const processEditTutorial = async (req, res) => {
     const errors = validationResult(req);
     const tutorialSlug = req.params.tutorialSlug;
     const userRole = req.session.user.roleName;
+    const currentUser = req.session.user.name;
+    const tutorial = await getTutorialBySlug(tutorialSlug);
+    const targetUser = tutorial.author;
 
     if (!errors.isEmpty()) {
         errors.array().forEach(error => {
@@ -97,7 +109,7 @@ const processEditTutorial = async (req, res) => {
         }
 
         // Check permissions
-        const canEdit = userRole === 'admin';
+        const canEdit = userRole === 'admin' || currentUser == targetUser;
 
         if (!canEdit) {
             req.flash('error', 'You do not have permission to edit this tutorial');
@@ -120,8 +132,11 @@ const processEditTutorial = async (req, res) => {
 const processDeleteTutorial = async (req, res) => {
     const tutorialSlug = req.params.tutorialSlug;
     const userRole = req.session.user.roleName;
+    const currentUser = req.session.user.name;
+    const tutorial = await getTutorialBySlug(tutorialSlug);
+    const targetUser = tutorial.author;
 
-    if (userRole !== 'admin') {
+    if (currentUser !== targetUser && userRole !== 'admin') {
         req.flash('error', 'You do not have permission to delete this tutorial');
         return res.redirect('/dashboard');
     }
@@ -144,4 +159,101 @@ const processDeleteTutorial = async (req, res) => {
     return res.redirect('/dashboard');
 };
 
-export { tutorialListPage, tutorialDetailsPage, handleCommentSubmission, displayEditTutorial, processEditTutorial, processDeleteTutorial };
+const displayEditComment = async (req, res) => {
+    const commentId = req.params.id;
+    const comment = await getTutorialCommentById(commentId);
+    const currentUser = req.session.user;
+    const targetUser = comment.sentBy;
+
+    if (currentUser.username !== targetUser) {
+        req.flash('error', 'You do not have permission to edit this comment');
+        return res.redirect('/dashboard');
+    }
+
+    res.render('tutorials/edit-comment', {
+        title: 'Edit Comment Text',
+        comment
+    });
+};
+
+const processEditComment = async (req, res) => {
+    const errors = validationResult(req);
+    const commentId = req.params.id;
+    const currentUser = req.session.user.username;
+    const comment = await getTutorialCommentById(commentId);
+    const targetUser = comment.sentBy;
+
+    if (!errors.isEmpty()) {
+        errors.array().forEach(error => {
+            req.flash('error', error.msg);
+        });
+    return res.redirect(`/tutorials/${commentId}/edit-comment`);
+    }
+
+    const message = req.body.message;
+
+    try {
+        const comment = await getTutorialCommentById(commentId);
+
+        if (!comment) {
+            req.flash('error', 'Comment not found');
+            return res.redirect('/dashboard');
+        }
+
+        if (currentUser !== targetUser) {
+            req.flash('error', 'You do not have permission to edit this comment');
+            return res.redirect('/dashboard');
+        };
+
+        // Update tutorial
+        await updateComment(commentId, message);
+
+        req.flash('success', 'Comment updated successfully');
+        res.redirect('/dashboard');
+    } catch (error) {
+        console.error('Error updating comment: ', error);
+        req.flash('error', 'An error occurred while updating the comment');
+        res.redirect(`/tutorials/${commentId}/edit-comment`);
+    }
+};
+
+const processDeleteComment = async (req, res) => {
+    const commentId = req.params.id;
+    const currentUser = req.session.user.username;
+    const userRole = req.session.user.roleName;
+    const comment = await getTutorialCommentById(commentId);
+    const targetUser = comment.sentBy;
+    console.log('currentUser: ', currentUser, 'targetUser', targetUser)
+
+    if (currentUser !== targetUser && userRole !== 'admin') {
+        req.flash('error', 'You do not have permission to delete this comment');
+        return res.redirect('/dashboard');
+    }
+
+    try {
+        const deleted = await deleteComment(commentId);
+
+        if (deleted) {
+            req.flash('success', 'Comment deleted successfully');
+        } else {
+            req.flash('error', 'Comment not found or already deleted');
+        }
+    } catch (error) {
+        console.error('Error deleting comment: ', error);
+        req.flash('error', 'An error occurred while deleting the comment');
+    }
+
+    return res.redirect('/dashboard');
+};
+
+export {
+    tutorialListPage,
+    tutorialDetailsPage,
+    handleCommentSubmission, 
+    displayEditTutorial,
+    processEditTutorial, 
+    processDeleteTutorial,
+    displayEditComment,
+    processEditComment,
+    processDeleteComment
+};

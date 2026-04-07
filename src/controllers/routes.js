@@ -1,13 +1,23 @@
 import { Router } from 'express';
 import { homePage } from './index.js';
-import { tutorialListPage, tutorialDetailsPage, handleCommentSubmission, displayEditTutorial, processEditTutorial, processDeleteTutorial } from './tutorials/tutorials.js';
+import {
+    tutorialListPage,
+    tutorialDetailsPage,
+    handleCommentSubmission, 
+    displayEditTutorial,
+    processEditTutorial,
+    processDeleteTutorial,
+    displayEditComment,
+    processEditComment,
+    processDeleteComment
+} from './tutorials/tutorials.js';
 import { instructorListPage } from './instructors/instructors.js';
 import { processLogout } from './forms/login.js';
 import contactRoutes from './forms/contact.js';
 import registrationRoutes from './forms/registration.js';
 import loginRoutes from './forms/login.js';
 import { displayDashboard } from '../controllers/dashboard/dashboard.js';
-import { commentValidation } from '../middleware/validation/forms.js';
+import { commentValidation, tutorialEditValidation } from '../middleware/validation/forms.js';
 import { requireLogin, requireRole } from '../middleware/auth.js';
 
 // Create a new router instance
@@ -57,9 +67,12 @@ router.get('/tutorials', tutorialListPage);
 router.get('/tutorials/:tutorialSlug', tutorialDetailsPage);
 // POST /tutorials/:tutorialSlug - Handle comment form submission with validation
 router.post('/tutorials/:tutorialSlug', commentValidation, handleCommentSubmission, tutorialDetailsPage);
-router.get('/tutorials/:tutorialSlug/edit', requireLogin, requireRole(['admin']), displayEditTutorial);
-router.post('/tutorials/:tutorialSlug/edit', requireLogin, requireRole(['admin']), processEditTutorial);
-router.post('/tutorials/:tutorialSlug/delete', requireLogin, requireRole(['admin']), processDeleteTutorial);
+router.get('/tutorials/:tutorialSlug/edit', requireLogin, requireRole(['admin', 'instructor']), displayEditTutorial);
+router.post('/tutorials/:tutorialSlug/edit', requireLogin, tutorialEditValidation, requireRole(['admin', 'instructor']), processEditTutorial);
+router.post('/tutorials/:tutorialSlug/delete', requireLogin, requireRole(['admin', 'instructor']), processDeleteTutorial);
+router.get('/tutorials/:id/edit-comment', requireLogin, displayEditComment);
+router.post('/tutorials/:id/edit-comment', commentValidation, requireLogin, processEditComment);
+router.post('/tutorials/:id/delete-comment', requireLogin, processDeleteComment);
 
 // Instructor routes
 router.get('/instructors', instructorListPage);

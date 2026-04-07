@@ -214,7 +214,7 @@ const getTutorialComments = async (postedIn) => {
 /**
  * 
  * @param {string} sentBy - The user who posted the comment
- * @returns {Promise<Object>} Object of one or mroe comments posted by the user
+ * @returns {Promise<Object>} Object of one or more comments posted by the user
  */
 const getTutorialCommentsBySentBy = async (sentBy) => {
     /**
@@ -231,7 +231,7 @@ const getTutorialCommentsBySentBy = async (sentBy) => {
     /**
      * Only return something if the object exists
      */
-    if (result.rows.length === 0) return {};
+    if (result.rows.length === 0) return null; // Null for displaying comments in dashboard
 
     const tutorialComments = result.rows.map(comment => {
         return {
@@ -247,7 +247,40 @@ const getTutorialCommentsBySentBy = async (sentBy) => {
 };
 
 /**
- * Update a contact message's status
+ * 
+ * @param {string} sentBy - The user who posted the comment
+ * @returns {Promise<Object>} Object of one comment posted by the user
+ */
+const getTutorialCommentById = async (id) => {
+    /**
+     * Get one tutorial comment
+     */
+    const query = `
+        SELECT id, sent_by, message, posted_in, created_at
+        FROM tutorial_comments
+        WHERE id = $1
+    `;
+
+    const result = await db.query(query, [id]);
+
+    /**
+     * Only return something if the object exists
+     */
+    if (result.rows.length === 0) return {};
+
+    const comment = result.rows[0];
+
+    return {
+        id: comment.id,
+        sentBy: comment.sent_by,
+        message: comment.message,
+        postedIn: comment.posted_in,
+        createdAt: comment.created_at
+    };
+};
+
+/**
+ * Update a tutorial
  */
 const updateTutorial = async (tutorialId, slug, title, description) => {
     const query = `
@@ -261,7 +294,7 @@ const updateTutorial = async (tutorialId, slug, title, description) => {
 };
 
 /**
- * Delete a contact message
+ * Delete a tutorial
  */
 const deleteTutorial = async (slug) => {
     const query = 'DELETE FROM tutorials WHERE slug = $1';
@@ -281,6 +314,29 @@ const deleteTutorialComments = async (slug) => {
     return result.rowCount > 0;
 };
 
+/**
+ * Update a comment
+ */
+const updateComment = async (id, message) => {
+    const query = `
+        UPDATE tutorial_comments
+        SET message = $2
+        WHERE id = $1
+        RETURNING message
+    `;
+    const result = await db.query(query, [id, message]);
+    return result.rows[0] || null;
+};
+
+/**
+ * Delete a comment
+ */
+const deleteComment = async (id) => {
+    const query = 'DELETE FROM tutorial_comments WHERE id = $1';
+    const result = await db.query(query, [id]);
+    return result.rowCount > 0;
+};
+
 export {
     getAllTutorials,
     getTutorialBySlug,
@@ -293,5 +349,8 @@ export {
     updateTutorial,
     deleteTutorial,
     deleteTutorialSteps,
-    deleteTutorialComments
+    deleteTutorialComments,
+    getTutorialCommentById,
+    updateComment,
+    deleteComment
 };

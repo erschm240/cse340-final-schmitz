@@ -145,9 +145,37 @@ const messageStatusValidation = [
     body('status')
         .trim()
         .isLength({ min: 2, max: 10 })
-        .withMessage('Message must be between 2 and 10 characters')
+        .withMessage('Status must be between 2 and 10 characters')
         .matches(/^[a-zA-Z0-9\s\-.,!?]+$/)
-        .withMessage('Message contains invalid characters')
+        .withMessage('Status contains invalid characters')
+];
+
+const tutorialEditValidation = [
+    body('slug')
+        .trim()
+        .isLength({ min: 2, max: 200 })
+        .withMessage('Slug must be between 2 and 200 characters')
+        .matches(/^[a-zA-Z0-9\s\-.,!?]+$/)
+        .withMessage('Title contains invalid characters'),
+    body('title')
+        .trim()
+        .isLength({ min: 2, max: 200 })
+        .withMessage('Title must be between 2 and 200 characters')
+        .matches(/^[a-zA-Z0-9\s\-.,!?]+$/)
+        .withMessage('Title contains invalid characters'),
+    body('description')
+        .trim()
+        .isLength({ min: 10, max: 2000 })
+        .withMessage('Message must be between 10 and 2000 characters')
+        .custom((value) => {
+            // Check for spam patterns (excessive repetition)
+            const words = value.split(/\s+/);
+            const uniqueWords = new Set(words);
+            if (words.length > 20 && uniqueWords.size / words.length < 0.3) {
+                throw new Error('Description appears to be spam');
+            }
+            return true;
+        })
 ];
 
 export {
@@ -156,5 +184,6 @@ export {
     editAccountValidation,
     loginValidation,
     commentValidation,
-    messageStatusValidation
+    messageStatusValidation,
+    tutorialEditValidation
 };

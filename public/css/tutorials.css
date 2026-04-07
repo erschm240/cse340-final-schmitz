@@ -228,6 +228,23 @@ h1 {
         align-items: center;
         gap: 1rem;
     }
+
+    .submit-button, .cancel-button {
+            width: fit-content;
+            display: flex;
+            justify-self: center;
+            justify-content: center;
+            padding: 1rem;
+            background-color: var(--dark-purple);
+            border: none;
+            border-radius: 8px;
+            color: var(--off-white);
+            font-size: 1rem;
+            font-family: var(--paragraph-font);
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
 }
 
 @media screen and (min-width: 1000px) {

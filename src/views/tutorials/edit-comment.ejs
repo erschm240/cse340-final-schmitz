@@ -1,0 +1,17 @@
+<%- include('../partials/header') %>
+<main>
+    <h1><%= title %></h1>
+
+    <form method="post" action="/tutorials/<%= comment.id %>/edit-comment" class="edit-form">
+        <div class="form-group">
+            <label for="message">Comment Message:</label>
+            <textarea type="text" id="message" name="message" rows="6" required><%= comment.message %></textarea>
+        </div>
+
+        <div class="buttons">
+            <button type="submit" class="submit-button">Update</button>
+                <a href="/dashboard" class="cancel-button">Cancel Edit</a>
+        </div>
+    </form>
+</main>
+<%- include('../partials/footer') %>

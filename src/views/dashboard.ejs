@@ -1,0 +1,202 @@
+<%- include('partials/header') %>
+<main>
+    <div class="dashboard">
+        <h1><%= dashboardContent.title %></h1>
+        <div class="dashboard-content">
+            <% if (user.roleName === 'admin') { %>
+                <h2>Admin Management Links</h2>
+                <div class="admin-management">
+                    <a href="/register/list">View and Manage Users</a>
+                    <a href="/contact/responses">View and Manage Contact Messages</a>
+                </div>
+            <% } %>
+            <h2>Account Information</h2>
+            <div class="user-detail">
+                <p>
+                    <span class="label">Name:</span>
+                    <span class="value"><%= user.name %></span>
+                </p>
+                <p>
+                    <span class="label">Username:</span>
+                    <span class="value"><%= user.username %></span>
+                </p>
+                <p>
+                    <span class="label">Email:</span>
+                    <span class="value"><%= user.email %></span>
+                </p>
+                <p>
+                    <span class="label">Role:</span>
+                    <span class="value"><%= user.roleName %></span>
+                </p>
+                <p>
+                    <span class="label">Date Created:</span>
+                    <span class="value"><%= new Date(user.createdAt).toLocaleDateString() %></span>
+                </p>
+                <% if (user.userId === userInfo.userId) { %>
+                    <a href="/register/<%= user.userId %>/edit" class="action-button">Edit</a>
+                <% } %>
+            </div>
+            <% if (user.roleName === 'instructor') { %>
+                <h2>Recieved Messages</h2>
+                <div class="message-info">
+                    <% if (dashboardContent.receivedMessages.length == 0) { %>
+                        <div class="no-messages">
+                            <p>No messages recieved.</p>
+                        </div>
+                    <% } else { %>
+                        <% dashboardContent.receivedMessages.forEach(message => { %>
+                            <div class="message">
+                                <p>
+                                    <span class="label">Recipient: </span>
+                                    <span class="value"><%= message.recipient %></span>
+                                </p>
+                                <p>
+                                    <span class="label">Sent By:</span>
+                                    <span class="value"><%= message.sentBy %></span>
+                                </p>
+                                <p>
+                                    <span class="label">Type: </span>
+                                    <span class="value"><%= message.messageType %></span>
+                                </p>
+                                <p>
+                                    <span class="label">Subject: </span>
+                                    <span class="value"><%= message.subject %></span>
+                                </p>
+                                <p>
+                                    <span class="label">Message: </span>
+                                    <span class="value"><%= message.message %></span>
+                                </p>
+                                <p>
+                                    <span class="label">Date Submitted:</span>
+                                    <span class="value"><%= new Date(message.submitted).toLocaleDateString() %></span>
+                                </p>
+                                <p>
+                                    <span class="label">Status:</span>
+                                    <span class="value"><%= message.status %></span>
+                                </p>
+                            </div>
+                        <% }); %>
+                    <% } %>
+                </div>
+            <% } %>
+            <% if (user.roleName === 'instructor' || user.roleName === 'user') { %>
+                <h2>Sent Messages</h2>
+                <div class="message-info">
+                    <% if (dashboardContent.sentMessages.length == 0) { %>
+                        <div class="no-messages">
+                            <p>No messages sent.</p>
+                        </div>
+                    <% } else { %>
+                        <% dashboardContent.sentMessages.forEach(message => { %>
+                            <div class="message">
+                                <p>
+                                    <span class="label">Recipient: </span>
+                                    <span class="value"><%= message.recipient %></span>
+                                </p>
+                                <p>
+                                    <span class="label">Sent By:</span>
+                                    <span class="value"><%= message.sentBy %></span>
+                                </p>
+                                <p>
+                                    <span class="label">Type: </span>
+                                    <span class="value"><%= message.messageType %></span>
+                                </p>
+                                <p>
+                                    <span class="label">Subject: </span>
+                                    <span class="value"><%= message.subject %></span>
+                                </p>
+                                <p>
+                                    <span class="label">Message: </span>
+                                    <span class="value"><%= message.message %></span>
+                                </p>
+                                <p>
+                                    <span class="label">Date Submitted:</span>
+                                    <span class="value"><%= new Date(message.submitted).toLocaleDateString() %></span>
+                                </p>
+                                <p>
+                                    <span class="label">Status:</span>
+                                    <span class="value"><%= message.status %></span>
+                                </p>
+                            </div>
+                        <% }); %>
+                    <% } %>
+                </div>
+            <% } %>
+            <% if (user.roleName === 'admin' || user.roleName === 'instructor') { %>
+                <h2>Tutorials</h2>
+                <% if (dashboardContent.tutorials.length == 0) { %>
+                        <div class="no-tutorials">
+                            <p>No tutorials to display.</p>
+                        </div>
+                    <% } else { %>
+                        <% dashboardContent.tutorials.forEach(tutorial => { %>
+                            <div class="tutorial-info">
+                                <p>
+                                    <span class="label">Slug: </span>
+                                    <span class="value"><%= tutorial.tutorialSlug %></span>
+                                </p>
+                                <p>
+                                    <span class="label">Title: </span>
+                                    <span class="value"><%= tutorial.title %></span>
+                                </p>
+                                <p>
+                                    <span class="label">Last Updated: </span>
+                                    <span class="value"><%= new Date(tutorial.lastUpdated).toLocaleDateString() %></span>
+                                </p>
+                                <p>
+                                    <span class="label">Author: </span>
+                                    <span class="value"><%= tutorial.author %></span>
+                                </p>
+                            </div>
+                        <% }); %>
+                    <% } %>
+                <% if (user.roleName === 'admin' || user.roleName === 'instructor') { %>
+                    <h2>Comments</h2>
+                    <div class="comments">
+                        <% if (dashboardContent.tutorialComments.length == 0) { %>
+                            <div class="no-comments">
+                                <p>No comments to display.</p>
+                            </div>
+                        <% } else { %>
+                            <% dashboardContent.tutorials.forEach(tutorial => { %>
+                                <% Object.values(dashboardContent.tutorialComments).forEach(comment => { %>
+                                    <% if (comment.postedIn === tutorial.tutorialSlug) { %>
+                                        <div class="comment">
+                                            <p>
+                                                <span class="label">Posted In: </span>
+                                                <span class="value"><%= comment.postedIn %></span>
+                                            </p>
+                                            <p>
+                                                <span class="label">Sender: </span>
+                                                <span class="value"><%= comment.sentBy %></span>
+                                            </p>
+                                            <p>
+                                                <span class="label">Date Posted: </span>
+                                                <span class="value"><%= new Date(comment.createdAt).toLocaleDateString() %></span>
+                                            </p>
+                                            <p>
+                                                <span class="label">Message: </span>
+                                                <span class="value"><%= comment.message %></span>
+                                            </p>
+                                        </div>
+                                    <% } %>
+                                <% }); %>
+                            <% }); %>
+                        <% } %>
+                    </div>
+                <% } %>
+            <% } %>
+            <% if (user.roleName === 'admin') { %>
+                <h2>Session Information</h2>
+                <!-- Relevant operational data, only for admin -->
+                <div class="session-debug">
+                    <pre><%= JSON.stringify(dashboardContent.sessionData, null, 2) %></pre>
+                </div>
+            <% } %>
+            <div class="dashboard-actions">
+                <a href="/logout" class="logout-button">Logout</a>
+            </div>
+        </div>
+    </div>
+</main>
+<%- include('partials/footer') %>

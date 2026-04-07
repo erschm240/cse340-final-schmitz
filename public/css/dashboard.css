@@ -1,0 +1,63 @@
+/* Dashboard styles */
+.admin-management {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    a {
+        font-size: 1.3rem;
+        text-decoration: none;
+        background-color: var(--dark-purple);
+        color: var(--off-white);
+        padding: 0.7rem;
+        width: fit-content;
+        border-radius: 8px;
+
+    }
+}
+
+.user-detail, .message, .tutorial-info, .comment {
+    background-color: var(--light-purple);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    color: var(--dark-gray);
+
+    .action-button {
+        font-family: var(--paragraph-font);
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+        margin: 0 1rem 0 0;
+        color: var(--dark-gray);
+
+        &:hover {
+            color: var(--dark-purple);
+        }
+    }
+}
+
+.session-debug {
+    background-color: var(--light-purple);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.label {
+    font-weight: 600;
+}
+
+.dashboard-actions {
+    display: flex;
+    justify-content: center;
+
+    .logout-button {
+        display: block;
+        margin: 1.5rem 0;
+        padding: 1rem 1.5rem;
+        background-color: var(--dark-purple);
+        border-radius: 8px;
+        color: var(--off-white);
+        text-decoration: none;
+        width: fit-content;
+    }
+}

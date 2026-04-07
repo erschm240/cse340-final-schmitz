@@ -39,14 +39,13 @@ const handleContactSubmission = async (req, res) => {
     const { recipient, 'message-type': messageType, subject, message } = req.body;
     console.log(req.body);
 
-    const sentBy = req.session.user;
-
 
     try {
         // Save to database
+        const sentBy = req.session.user.name;
         await createContactForm(recipient, messageType, subject, message, sentBy);
         req.flash('success', 'Thanks for contacting us! You can look forward to our response soon.');
-        res.redirect('/contact/responses');
+        res.redirect('/dashboard');
     } catch (error) {
         console.error('Error saving contact form: ', error);
         req.flash('error', 'Unable to submit your message. Please try again later.');

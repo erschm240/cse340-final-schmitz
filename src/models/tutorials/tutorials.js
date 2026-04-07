@@ -21,7 +21,7 @@ const getAllTutorials = async () => {
      */
     return result.rows.map(tutorial => ({
         id: tutorial.id,
-        slug: tutorial.slug,
+        tutorialSlug: tutorial.slug,
         title: tutorial.title,
         description: tutorial.description,
         lastUpdated: tutorial.last_updated,
@@ -40,7 +40,7 @@ const getTutorialBySlug = async (slug) => {
      * Get a single tutorial by slug
      */
     const query = `
-        SELECT id, slug, title, description, last_updated::date, author, likes
+        SELECT id, slug, title, description, last_updated, author, likes
         FROM tutorials
         WHERE slug = $1
     `;
@@ -64,6 +64,42 @@ const getTutorialBySlug = async (slug) => {
         likes: tutorial.likes
     };
 };
+
+/**
+ * 
+ * @param {string} author - Name of the author of the tutorial
+ * @returns 
+ */
+const getTutorialsByAuthor = async (author) => {
+    /**
+     * Get all tutorials by a specific author
+     */
+    const query = `
+        SELECT id, slug, title, description, last_updated, author
+        FROM tutorials
+        WHERE author = $1
+    `;
+
+    const result = await db.query(query, [author]);
+
+    /**
+     * Only return something if the object exists
+     */
+    if (result.rows.length === 0) return {};
+
+    const tutorials = result.rows.map(tutorial => {
+        return {
+            id: tutorial.id,
+            tutorialSlug: tutorial.slug,
+            title: tutorial.title,
+            description: tutorial.description,
+            lastUpdated: tutorial.last_updated,
+            author: tutorial.author
+        };
+    });
+    
+    return tutorials;
+}
 
 /**
  * 
@@ -116,6 +152,30 @@ const createTutorialComment = async (sentBy, message, postedIn) => {
     return result.rows[0];
 };
 
+const getAllComments = async () => {
+    const query = `
+        SELECT id, sent_by, message, posted_in, created_at
+        FROM tutorial_comments
+    `;
+
+    const result = await db.query(query);
+
+    /**
+     * Only return something if the object exists
+     */
+    if (result.rows.length === 0) return {};
+
+    const tutorialComments = result.rows.map(comment => ({
+        id: comment.id,
+        sentBy: comment.sent_by,
+        message: comment.message,
+        postedIn: comment.posted_in,
+        createdAt: comment.created_at
+    }));
+
+    return tutorialComments;
+};
+
 /**
  * 
  * @param {string} postedIn - Slug of the tutorial the comment was posted in
@@ -126,7 +186,7 @@ const getTutorialComments = async (postedIn) => {
      * Get the tutorial comments as an array
      */
     const query = `
-        SELECT id, sent_by AS "sentBy", message, posted_in AS "postedIn", created_at AS "createdAt"
+        SELECT id, sent_by, message, posted_in, created_at
         FROM tutorial_comments
         WHERE posted_in = $1
     `;
@@ -141,14 +201,58 @@ const getTutorialComments = async (postedIn) => {
     const tutorialComments = result.rows.map(comment => {
         return {
             id: comment.id,
-            sentBy: comment.sentBy,
+            sentBy: comment.sent_by,
             message: comment.message,
-            postedIn: comment.postedIn,
-            createdAt: comment.createdAt
+            postedIn: comment.posted_in,
+            createdAt: comment.created_at
         };
     });
 
     return tutorialComments;
 };
 
-export { getAllTutorials, getTutorialBySlug, getTutorialSteps, createTutorialComment, getTutorialComments };
+/**
+ * 
+ * @param {string} sentBy - The user who posted the comment
+ * @returns {Promise<Object>} Object of one or mroe comments posted by the user
+ */
+const getTutorialCommentsBySentBy = async (sentBy) => {
+    /**
+     * Get the tutorial comments as an array
+     */
+    const query = `
+        SELECT id, sent_by, message, posted_in, created_at
+        FROM tutorial_comments
+        WHERE sent_by = $1
+    `;
+
+    const result = await db.query(query, [sentBy]);
+
+    /**
+     * Only return something if the object exists
+     */
+    if (result.rows.length === 0) return {};
+
+    const tutorialComments = result.rows.map(comment => {
+        return {
+            id: comment.id,
+            sentBy: comment.sent_by,
+            message: comment.message,
+            postedIn: comment.posted_in,
+            createdAt: comment.created_at
+        };
+    });
+
+    return tutorialComments;
+};
+
+export {
+    getAllTutorials,
+    getTutorialBySlug,
+    getTutorialSteps,
+    createTutorialComment,
+    getAllComments,
+    getTutorialComments,
+    getTutorialsByAuthor,
+    getTutorialCommentsBySentBy
+};

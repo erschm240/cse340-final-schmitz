@@ -1,72 +1,65 @@
-import { getDashboardTutorialComments, getDashboardTutorials } from '../../models/dashboard/dashboard.js';
-import { Router } from 'express';
-import { requireLogin, requireRole } from '../../middleware/auth.js';
 import { getContactFormsByRecipient, getContactFormsBySentBy } from '../../models/forms/contact.js';
+import { getUserById } from '../../models/forms/registration.js';
+import { getAllComments, getAllTutorials, getTutorialsByAuthor } from '../../models/tutorials/tutorials.js';
 
-const router = Router();
+/**
+ * Get dashboard data
+ */
+const getDashboardData = async (req) => {
+    const user = req.session.user;
+    
+    let dashboardContent = {};
+
+    if (user.roleName === 'admin') {
+        dashboardContent = {
+            title: 'Admin Dashboard',
+            sessionData: req.session,
+            tutorials: await getAllTutorials(),
+            tutorialComments: await getAllComments()
+        }
+    }
+
+    if (user.roleName === 'instructor') {
+        const instructorName = user.name;
+        dashboardContent = {
+            title: 'Instructor Dashboard',
+            receivedMessages: await getContactFormsByRecipient(instructorName),
+            sentMessages: await getContactFormsBySentBy(instructorName),
+            tutorials: await getTutorialsByAuthor(instructorName),
+            tutorialComments: await getAllComments()
+        }
+    }
+
+    if (user.roleName === 'user') {
+        const sentBy = user.name;
+        dashboardContent = {
+            title: 'User Dashboard',
+            sentMessages: await getContactFormsBySentBy(sentBy)
+        }
+    }
+
+    return dashboardContent;
+};
 
 /**
  * Display protected dashboard
  */
-const displayAdminDashboard = async (req, res) => {
+const displayDashboard = async (req, res) => {
     const user = req.session.user;
-    const sessionData = req.session;
 
-    const dashboardTutorials = await getDashboardTutorials();
+    const userInfo = await getUserById(user.userId);
 
-    const dashboardTutorialComments = await getDashboardTutorialComments();
+    const userComments = await getContactFormsBySentBy(user.username);
 
-    res.render('dashboard/admin', {
-        title: 'Admin Dashboard',
+    const dashboardContent = await getDashboardData(req);
+
+    res.render('dashboard', {
+        title: dashboardContent.title,
         user,
-        dashboardTutorials: dashboardTutorials,
-        dashboardTutorialComments: dashboardTutorialComments,
-        sessionData
+        userInfo,
+        userComments,
+        dashboardContent
     });
 };
 
-const displayInstructorDashboard = async (req, res) => {
-    const user = req.session.user;
-    const recipient = user.name;
-
-    const dashboardTutorials = await getDashboardTutorials();
-
-    const instructorContactMessages = await getContactFormsByRecipient(recipient);
-
-    res.render('dashboard/instructor', {
-        title: 'Instructor Dashboard',
-        user,
-        dashboardTutorials,
-        instructorContactMessages
-    });
-};
-
-const displayUserDashboard = async (req, res) => {
-    const user = req.session.user;
-    const sentBy = user.name;
-
-    const userContactMessages = await getContactFormsBySentBy(sentBy);
-
-    res.render('dashboard/user', {
-        title: 'Dashboard',
-        user,
-        userContactMessages
-    });
-};
-
-/**
- * GET /dashboard/admin - Display the admin dashboard
- */
-router.get('/admin', requireLogin, requireRole(['admin']), displayAdminDashboard);
-
-/**
- * GET /dashboard/instructor - Display the instructor dashboard
- */
-router.get('/instructor', requireLogin, requireRole(['admin', 'instructor']), displayInstructorDashboard);
-
-/**
- * GET /dashboard/user - Display the user dashboard
- */
-router.get('/user', requireLogin, requireRole(['admin', 'user']), displayUserDashboard);
-
-export default router;
+export { displayDashboard };

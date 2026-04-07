@@ -1,7 +1,7 @@
 <%- include('../partials/header') %>
 <main>
     <div class="tutorial-header">
-        <img src="/images/<%= tutorial.tutorialSlug %>/hero.jpg" class="hero-img" alt="Hero image for the <%= tutorial.slug %> tutorial">
+        <img src="/images/<%= tutorial.tutorialSlug %>/hero.jpg" class="hero-img" alt="Hero image for the <%= tutorial.tutorialSlug %> tutorial">
         <h1><%= tutorial.title %></h1>
         <h2>By <%= tutorial.author %></h2>
         <p>Last updated on <%= new Date(tutorial.lastUpdated).toLocaleDateString() %></p>
@@ -11,7 +11,7 @@
         <% Object.values(steps).forEach(step => { %>
             <div class="tutorial-step">
                 <h3>Step <%= step.stepOrder %></h3>
-                <p class="<%= tutorial.slug %>">
+                <p class="<%= tutorial.tutorialSlug %>">
                     <%= step.textContent %>
                 </p>
                 <img src="/images/<%= step.slug %>/step-<%= step.stepOrder %>.<%= step.imgFileType %>" class="step-img" alt="Image for step <%= step.stepOrder %> of the <%= tutorial.title %> tutorial">

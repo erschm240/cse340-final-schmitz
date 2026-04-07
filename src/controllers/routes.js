@@ -6,8 +6,9 @@ import { processLogout } from './forms/login.js';
 import contactRoutes from './forms/contact.js';
 import registrationRoutes from './forms/registration.js';
 import loginRoutes from './forms/login.js';
-import dashboardRoutes from './dashboard/dashboard.js';
+import { displayDashboard } from '../controllers/dashboard/dashboard.js';
 import { commentValidation } from '../middleware/validation/forms.js';
+import { requireLogin, requireRole } from '../middleware/auth.js';
 
 // Create a new router instance
 const router = Router();
@@ -42,6 +43,12 @@ router.use('/login', (req, res, next) => {
     next();
 });
 
+// Add dashboard-specific styles
+router.use('/dashboard', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/dashboard.css">');
+    next();
+})
+
 // Homepage
 router.get('/', homePage);
 
@@ -66,6 +73,6 @@ router.use('/login', loginRoutes);
 // Authentication related routes
 router.get('/logout', processLogout);
 
-router.use('/dashboard', dashboardRoutes);
+router.get('/dashboard', requireLogin, requireRole(['admin', 'instructor', 'user']), displayDashboard);
 
 export default router;

@@ -88,35 +88,6 @@ footer {
     }
 }
 
-/* Dashboard styles */
-.user-detail {
-    background-color: var(--light-purple);
-    padding: 1rem;
-    border-radius: 8px;
-}
-
-.session-debug {
-    background-color: var(--light-purple);
-    padding: 1rem;
-    border-radius: 8px;
-}
-
-.dashboard-actions {
-    display: flex;
-    justify-content: center;
-
-    .logout-button {
-        display: block;
-        margin: 1.5rem 0;
-        padding: 1rem 1.5rem;
-        background-color: var(--dark-purple);
-        border-radius: 8px;
-        color: var(--off-white);
-        text-decoration: none;
-        width: fit-content;
-    }
-}
-
 /* Flash messages */
 .flash-messages {
     margin: 1rem auto;

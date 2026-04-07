@@ -246,6 +246,41 @@ const getTutorialCommentsBySentBy = async (sentBy) => {
     return tutorialComments;
 };
 
+/**
+ * Update a contact message's status
+ */
+const updateTutorial = async (tutorialId, slug, title, description) => {
+    const query = `
+        UPDATE tutorials
+        SET slug = $2, title = $3, description = $4, last_updated = CURRENT_TIMESTAMP
+        WHERE id = $1
+        RETURNING slug, title, description, last_updated
+    `;
+    const result = await db.query(query, [tutorialId, slug, title, description]);
+    return result.rows[0] || null;
+};
+
+/**
+ * Delete a contact message
+ */
+const deleteTutorial = async (slug) => {
+    const query = 'DELETE FROM tutorials WHERE slug = $1';
+    const result = await db.query(query, [slug]);
+    return result.rowCount > 0;
+};
+
+const deleteTutorialSteps = async (slug) => {
+    const query = 'DELETE FROM tutorial_steps WHERE slug = $1';
+    const result = await db.query(query, [slug]);
+    return result.rowCount > 0;
+};
+
+const deleteTutorialComments = async (slug) => {
+    const query = 'DELETE FROM tutorial_comments WHERE posted_in = $1';
+    const result = await db.query(query, [slug]);
+    return result.rowCount > 0;
+};
+
 export {
     getAllTutorials,
     getTutorialBySlug,
@@ -254,5 +289,9 @@ export {
     getAllComments,
     getTutorialComments,
     getTutorialsByAuthor,
-    getTutorialCommentsBySentBy
+    getTutorialCommentsBySentBy,
+    updateTutorial,
+    deleteTutorial,
+    deleteTutorialSteps,
+    deleteTutorialComments
 };

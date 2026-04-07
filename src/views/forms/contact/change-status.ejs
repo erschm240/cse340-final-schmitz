@@ -1,0 +1,22 @@
+<%- include('../../partials/header') %>
+<main>
+    <h1><%= title %></h1>
+
+    <form method="post" action="/contact/<%= message.id %>/change-status" class="edit-form">
+        <div class="form-group">
+            <label for="status">Status:</label>
+            <input type="text" id="status" name="status" value="<%= message.status %>" required>
+        </div>
+
+        <div class="buttons">
+            <button type="submit" class="submit-button">Update Status</button>
+            <% if (userRole === 'admin') { %>
+                <a href="/contact/responses" class="cancel-button">Cancel Edit</a>
+            <% } %>
+            <% if (userRole === 'instructor') { %>
+                <a href="/dashboard" class="cancel-button">Cancel Edit</a>
+            <% } %>
+        </div>
+    </form>
+</main>
+<%- include('../../partials/footer') %>

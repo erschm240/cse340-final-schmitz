@@ -23,16 +23,18 @@
     color: var(--dark-gray);
 
     .action-button {
+        width: fit-content;
+        padding: 0.5rem;
+        background-color: var(--dark-purple);
+        border: none;
+        border-radius: 8px;
+        color: var(--off-white);
+        font-size: 1rem;
         font-family: var(--paragraph-font);
         font-weight: bold;
         cursor: pointer;
         text-decoration: none;
         margin: 0 1rem 0 0;
-        color: var(--dark-gray);
-
-        &:hover {
-            color: var(--dark-purple);
-        }
     }
 }
 
@@ -52,6 +54,8 @@
 
     .logout-button {
         display: block;
+        font-family: var(--paragraph-font);
+        font-weight: bold;
         margin: 1.5rem 0;
         padding: 1rem 1.5rem;
         background-color: var(--dark-purple);

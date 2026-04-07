@@ -184,6 +184,52 @@ h1 {
         }
 }
 
+.edit-form {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 8px;
+    background-color: var(--light-purple);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.8rem;
+        font-size: 1.3rem;
+        font-weight: bold;
+        font-family: var(--header-font);
+        color: var(--dark-gray);
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 0.75rem;
+        box-sizing: border-box;
+        border: 1px solid var(--medium-purple);
+        border-radius: 8px;
+        font-size: 1rem;
+        font-family: var(--paragraph-font);
+        background-color: var(--off-white);
+        transition: border-color 0.3s ease;
+
+        &:focus {
+            outline: none;
+            border-color: var(--dark-purple);
+        }
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+}
+
 @media screen and (min-width: 1000px) {
     .tutorial-list {
         max-width: 1000px;

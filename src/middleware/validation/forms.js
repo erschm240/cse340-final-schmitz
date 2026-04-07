@@ -139,12 +139,22 @@ const commentValidation = [
             }
             return true;
         })
-]
+];
+
+const messageStatusValidation = [
+    body('status')
+        .trim()
+        .isLength({ min: 2, max: 10 })
+        .withMessage('Message must be between 2 and 10 characters')
+        .matches(/^[a-zA-Z0-9\s\-.,!?]+$/)
+        .withMessage('Message contains invalid characters')
+];
 
 export {
     contactValidation,
     registrationValidation,
     editAccountValidation,
     loginValidation,
-    commentValidation
+    commentValidation,
+    messageStatusValidation
 };

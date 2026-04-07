@@ -1,0 +1,27 @@
+<%- include('../partials/header') %>
+<main>
+    <h1><%= title %></h1>
+
+    <form method="post" action="/tutorials/<%= tutorial.tutorialSlug %>/edit" class="edit-form">
+        <div class="form-group">
+            <label for="slug">Tutorial Slug:</label>
+            <input type="text" id="slug" name="slug" value="<%= tutorial.tutorialSlug %>" required>
+        </div>
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" value="<%= tutorial.title %>" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="6" required><%= tutorial.description %></textarea>
+        </div>
+
+        <div class="buttons">
+            <button type="submit" class="submit-button">Update</button>
+            <% if (userRole === 'admin' || userRole === 'instructor') { %>
+                <a href="/dashboard" class="cancel-button">Cancel Edit</a>
+            <% } %>
+        </div>
+    </form>
+</main>
+<%- include('../partials/footer') %>

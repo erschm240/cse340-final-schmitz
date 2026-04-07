@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { validationResult } from "express-validator";
-import { createContactForm, getAllContactForms, getAllPossibleRecipients } from "../../models/forms/contact.js";
+import { createContactForm, deleteContactMessage, getAllContactForms, getAllPossibleRecipients, getContactFormById, updateStatus } from "../../models/forms/contact.js";
 import { contactValidation } from "../../middleware/validation/forms.js";
 import { requireLogin, requireRole } from "../../middleware/auth.js";
+import { messageStatusValidation } from "../../middleware/validation/forms.js";
 
 const router = Router();
 
@@ -37,7 +38,6 @@ const handleContactSubmission = async (req, res) => {
     
     // Extract validated data
     const { recipient, 'message-type': messageType, subject, message } = req.body;
-    console.log(req.body);
 
 
     try {
@@ -71,6 +71,83 @@ const displayContactResponses = async (req, res) => {
     });
 };
 
+const displayChangeContactStatusForm = async (req, res) => {
+    const messageId = req.params.id;
+    const message = await getContactFormById(messageId);
+
+    res.render(`forms/contact/change-status`, {
+        title: 'Change Message Status',
+        message
+    });
+};
+
+const processChangeContactStatus = async (req, res) => {
+    const errors = validationResult(req);
+    const messageId = req.params.id;
+    const userRole = req.session.user.roleName;
+
+    if (!errors.isEmpty()) {
+        errors.array().forEach(error => {
+            req.flash('error', error.msg);
+        });
+    return res.redirect(`/contact/${messageId}/change-status`);
+    }
+
+    const status = req.body.status;
+
+    try {
+        const message = await getContactFormById(messageId);
+
+        if (!message) {
+            req.flash('error', 'Contact message not found');
+            return res.redirect('/dashboard');
+        }
+
+        // Check permissions
+        const canEdit = userRole === 'admin' || userRole === 'instructor';
+
+        if (!canEdit) {
+            req.flash('error', 'You do not have permission to change the status.');
+            return res.redirect('/dashboard');
+        };
+
+        // Update status
+        await updateStatus(messageId, status);
+
+        req.flash('success', 'Message status updated successfully');
+        res.redirect('/dashboard');
+    } catch (error) {
+        console.error('Error updating message status: ', error);
+        req.flash('error', 'An error occurred while updating message status');
+        res.redirect(`/contact/${messageId}/change-status`);
+    }
+};
+
+const processDeleteContactMessage = async (req, res) => {
+    const messageId = req.params.id;
+    const userRole = req.session.user.roleName;
+
+    if (userRole !== 'admin') {
+        req.flash('error', 'You do not have permission to delete contact messages');
+        return res.redirect('/dashboard');
+    }
+
+    try {
+        const deleted = await deleteContactMessage(messageId);
+
+        if (deleted) {
+            req.flash('success', 'Message deleted successfully');
+        } else {
+            req.flash('error', 'Message not found or already deleted');
+        }
+    } catch (error) {
+        console.error('Error deleting message: ', error);
+        req.flash('error', 'An error occurred while deleting the message');
+    }
+
+    return res.redirect('/dashboard');
+};
+
 /**
  * GET /contact - Display the contact form
  */
@@ -82,8 +159,24 @@ router.get('/', contactFormPage);
 router.post('/', contactValidation, handleContactSubmission);
 
 /**
- * GET /contact/responses - Display all contact form submissions
+ * GET /responses - Display all contact form submissions
  */
 router.get('/responses', requireLogin, requireRole(['admin']), displayContactResponses);
+
+/**
+ * Get /:id/change-status - Display change status form
+ */
+router.get('/:id/change-status', requireLogin, requireRole(['admin']), displayChangeContactStatusForm);
+
+/**
+ * POST /:id/change-status - Process change status
+ */
+router.post('/:id/change-status', requireLogin, requireRole(['admin', 'instructor']), messageStatusValidation, processChangeContactStatus);
+
+
+/**
+ * POST /:id/delete - Delete contact message
+ */
+router.post('/:id/delete', requireLogin, requireRole(['admin']), processDeleteContactMessage);
 
 export default router;

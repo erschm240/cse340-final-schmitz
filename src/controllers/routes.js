@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { homePage } from './index.js';
-import { tutorialListPage, tutorialDetailsPage, handleCommentSubmission } from './tutorials/tutorials.js';
+import { tutorialListPage, tutorialDetailsPage, handleCommentSubmission, displayEditTutorial, processEditTutorial, processDeleteTutorial } from './tutorials/tutorials.js';
 import { instructorListPage } from './instructors/instructors.js';
 import { processLogout } from './forms/login.js';
 import contactRoutes from './forms/contact.js';
@@ -57,6 +57,9 @@ router.get('/tutorials', tutorialListPage);
 router.get('/tutorials/:tutorialSlug', tutorialDetailsPage);
 // POST /tutorials/:tutorialSlug - Handle comment form submission with validation
 router.post('/tutorials/:tutorialSlug', commentValidation, handleCommentSubmission, tutorialDetailsPage);
+router.get('/tutorials/:tutorialSlug/edit', requireLogin, requireRole(['admin']), displayEditTutorial);
+router.post('/tutorials/:tutorialSlug/edit', requireLogin, requireRole(['admin']), processEditTutorial);
+router.post('/tutorials/:tutorialSlug/delete', requireLogin, requireRole(['admin']), processDeleteTutorial);
 
 // Instructor routes
 router.get('/instructors', instructorListPage);

@@ -27,6 +27,16 @@ const getAllContactForms = async () => {
     return result.rows;
 };
 
+const getContactFormById = async (id) => {
+    const query = `
+        SELECT id, recipient, message_type AS "messageType", subject, message, sent_by AS "sentBy", submitted, status
+        FROM contact_form
+        WHERE id = $1
+    `;
+    const result = await db.query(query, [id]);
+    return result.rows[0] || null;
+};
+
 const getContactFormsByRecipient = async (recipient) => {
     const query = `
         SELECT id, recipient, message_type AS "messageType", subject, message, sent_by AS "sentBy", submitted, status
@@ -55,6 +65,29 @@ const getAllPossibleRecipients = async () => {
     `;
     const result = await db.query(query);
     return result.rows;
-}
+};
 
-export { createContactForm, getAllContactForms, getContactFormsByRecipient, getContactFormsBySentBy, getAllPossibleRecipients };
+/**
+ * Update a contact message's status
+ */
+const updateStatus = async (id, status) => {
+    const query = `
+        UPDATE contact_form
+        SET status = $2
+        WHERE id = $1
+        RETURNING status
+    `;
+    const result = await db.query(query, [id, status]);
+    return result.rows[0] || null;
+};
+
+/**
+ * Delete a contact message
+ */
+const deleteContactMessage = async (id) => {
+    const query = 'DELETE FROM contact_form WHERE id = $1';
+    const result = await db.query(query, [id]);
+    return result.rowCount > 0;
+};
+
+export { createContactForm, getAllContactForms, getContactFormById, getContactFormsByRecipient, getContactFormsBySentBy, getAllPossibleRecipients, updateStatus, deleteContactMessage };

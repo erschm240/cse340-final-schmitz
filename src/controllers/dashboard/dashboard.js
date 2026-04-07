@@ -1,6 +1,6 @@
 import { getContactFormsByRecipient, getContactFormsBySentBy } from '../../models/forms/contact.js';
 import { getUserById } from '../../models/forms/registration.js';
-import { getAllComments, getAllTutorials, getTutorialsByAuthor } from '../../models/tutorials/tutorials.js';
+import { getAllComments, getAllTutorials, getTutorialCommentsBySentBy, getTutorialsByAuthor } from '../../models/tutorials/tutorials.js';
 
 /**
  * Get dashboard data
@@ -32,9 +32,12 @@ const getDashboardData = async (req) => {
 
     if (user.roleName === 'user') {
         const sentBy = user.name;
+        const commentSentBy = user.username;
         dashboardContent = {
             title: 'User Dashboard',
-            sentMessages: await getContactFormsBySentBy(sentBy)
+            sentMessages: await getContactFormsBySentBy(sentBy),
+            tutorials: await getAllTutorials(),
+            tutorialComments: await getTutorialCommentsBySentBy(commentSentBy)
         }
     }
 
